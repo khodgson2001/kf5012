@@ -1,8 +1,19 @@
+/*
+load in required node modules;
+- mysql
+- express
+- express session
+- path
+*/
 const mysql = require('mysql');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
 
+/*
+create connection between app + mysql db
+current details are localhost, root and no password
+*/
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -10,7 +21,11 @@ const connection = mysql.createConnection({
     database: 'nodelogin'
 });
 
-const app = express();
+const app = express(); //initialise app with express
+
+/*
+create session variable with express-session
+*/
 
 app.use(session({
     secret: 'secret',
