@@ -1,7 +1,13 @@
+/*
+load in modules;
+mysql, express, express-session, path
+*/
+
 const mysql = require('mysql');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+//connect to MySQL db, currently locally ran
 
 const connection = mysql.createConnection({
 	host     : 'localhost',
@@ -10,29 +16,34 @@ const connection = mysql.createConnection({
 	database : 'mydb'
 });
 
+//intialize express
 const app = express();
 
+//create session variables
 app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
 }));
+
+// ???
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
-// http://localhost:3000/
+// http://localhost:3000/ site generation
 app.get('/', function(request, response) {
 	// Render login template
 	response.sendFile(path.join(__dirname + '/login.html'));
 });
 
-// http://localhost:3000/auth
+// http://localhost:3000/auth auth page generation
 app.post('/auth', function(request, response) {
-	// Capture the input fields
+	// store input
 	let username = request.body.username;
 	let password = request.body.password;
-	// Ensure the input fields exists and are not empty
+
+	// validation for empty
 	if (username && password) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
 		connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
@@ -56,11 +67,11 @@ app.post('/auth', function(request, response) {
 	}
 });
 
-// http://localhost:3000/home
+// http://localhost:3000/home home page generation
 app.get('/home', function(request, response) {
-	// If the user is loggedin
+	// If loggedin
 	if (request.session.loggedin) {
-		// Output username
+		// return username
 		response.send('Welcome back, ' + request.session.username + '!');
 	} else {
 		// Not logged in
