@@ -1,7 +1,10 @@
 /*
 load in modules;
 mysql, express, express-session, path
+
+reference: https://codeshack.io/basic-login-system-nodejs-express-mysql/
 */
+
 
 const mysql = require('mysql');
 const express = require('express');
