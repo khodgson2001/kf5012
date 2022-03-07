@@ -4,57 +4,69 @@ const session = require('express-session');
 const path = require('path');
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'nodelogin'
+	host     : 'localhost',
+	user     : 'root',
+	password : 'password',
+	database : 'mydb'
 });
 
 const app = express();
 
 app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
 }));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
-app.get('/', function(req, res){
-    res.sendFile(path.join(__dirname + '/login.html'));
+// http://localhost:3000/
+app.get('/', function(request, response) {
+	// Render login template
+	response.sendFile(path.join(__dirname + '/login.html'));
 });
 
-app.post('/auth', function(req, res){
-    let username = req.body.username;
-    let password = req.body.password;
-
-    if (username && password){
-        connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], function( error, results, fields){
-            if (error) throw error;
-
-            if (results.lenth > 0){
-                req.session.loggedin = true;
-                req.session.username = username;
-                res.redirect('/home');
-            } else {
-                res.send('Incorrect username and/or password');
-            }
-            res.end();
-        });
-    } else {
-        res.send('Please enter username and password.');
-        res.end();
-    }
+// http://localhost:3000/auth
+app.post('/auth', function(request, response) {
+	// Capture the input fields
+	let username = request.body.username;
+	let password = request.body.password;
+	// Ensure the input fields exists and are not empty
+	if (username && password) {
+		// Execute SQL query that'll select the account from the database based on the specified username and password
+		connection.query('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+			// If there is an issue with the query, output the error
+			if (error) throw error;
+			// If the account exists
+			if (results.length > 0) {
+				// Authenticate the user
+				request.session.loggedin = true;
+				request.session.username = username;
+				// Redirect to home page
+				response.redirect('/home');
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}			
+			response.end();
+		});
+	} else {
+		response.send('Please enter Username and Password!');
+		response.end();
+	}
 });
 
-app.get('/home', function (req, res){
-    if (req.session.loggedin){
-        res.send('Welcome back, ' + req.session.username);
-    } else {
-        res.send('Please login!');
-    }
-    res.send
+// http://localhost:3000/home
+app.get('/home', function(request, response) {
+	// If the user is loggedin
+	if (request.session.loggedin) {
+		// Output username
+		response.send('Welcome back, ' + request.session.username + '!');
+	} else {
+		// Not logged in
+		response.send('Please login to view this page!');
+	}
+	response.end();
 });
 
 app.listen(3000);
