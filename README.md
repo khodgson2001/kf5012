@@ -1,5 +1,7 @@
-# KF5012
-Team Name: Team Biscuit Bulk
+# KF5012 - Team Biscuit Bulk
+
+
+
 # Overview
 This is the Github repo for our project; A barbering booking site. The website will provide use to both customers and the barber shop owner through an authority-based login system. On one end, the website will deal with payments from customers, allow customers to arrange or cancel haircuts and view upcoming appointments among other features. On the other side, the administrator will be able to cancel, reject or rearrange bookings with certain clients, change pricing, times and dates live on the website alongside other general administrative features. 
 
