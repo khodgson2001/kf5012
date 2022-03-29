@@ -11,7 +11,8 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 //connect to MySQL db, currently locally ran
-
+//will need to link up to an exisiting DB from elsewhere
+//poss one on personal domain?\
 const connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
