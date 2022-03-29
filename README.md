@@ -5,9 +5,9 @@ This is the Github repo for our project; A barbering booking site. The website w
 
 # Technologies
 We plan on using the following technologies:
-- [Insert Frontend Here (i.e. Bootstrap, React)]
-- [Insert Backend Here (i.e. NodeJS/Express, DJango,)]
-- [Insert database Here (SQL, NoSQL etc.)]
+- React Framework + Bootstrap CSS
+- Node.JS, Express
+- MySQL
 
 # Focuses
 James will be working on the design of the site, and Jason will then develop the front-end based on these designs. Kieran will be focussing on the back-end development for the application, and also designing and implementing the databases for the site. Jason will also be looking at implementing a payment gateway into the site, and James will be working on converting the website into a mobile application.
