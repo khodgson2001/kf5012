@@ -16,7 +16,7 @@ function App() {
                 <div className = 'pageContent'>
                     <Routes>
                         <Route path = '/NavDropdown' element = {<NavDropdown/>}/>
-                        <Route path = '/' element = {<Home/>} />
+                        <Route path = '/kf5012' element = {<Home/>} />
                         <Route path = '/Booking' element = {<Booking/>} />
                         <Route path = '/Login' element = {<Login/>} />
                         <Route path = '/Register' element = {<Register/>} />
