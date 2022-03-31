@@ -6,6 +6,7 @@ import Booking from './Booking.js';
 import Login from './Login.js';
 import Home from './Home.js';
 import Footer from './Footer.js';
+import Register from './Register.js';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                         <Route path = '/' element = {<Home/>} />
                         <Route path = '/Booking' element = {<Booking/>} />
                         <Route path = '/Login' element = {<Login/>} />
+                        <Route path = '/Register' element = {<Register/>} />
                     </Routes>
                 </div>
                 <Footer/>
