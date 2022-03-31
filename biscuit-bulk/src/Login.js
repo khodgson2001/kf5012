@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Login() {
     return(
@@ -22,7 +23,7 @@ function Login() {
             <div className='noLogin'>
                 <h3>Not got an account?</h3>
                 <h4>Create one here:</h4>
-                <a href = '/register'>Register account</a>
+                <Link to = '/Register'>Register account</Link>
             </div>
         </div>
     );
