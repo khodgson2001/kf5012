@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+.navbar {
+    border: solid black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 450px;
+    height: 100px;
+}
+
+.navbar a {
+    font-size: 200%;
+    margin: 10%;
+    text-decoration: none;
+    transition: 0.45s;
+}
+
+.navbar a:hover {
+    color: red;
+}
+
+.navbar h1 {
+    max-width: 200px;
+    text-align: center;
+}
+
+.navDropdown a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 300%;
+    border: solid thin black;
+    background: grey;
+    margin: 2%;
+    border-radius: 20px; 
+    padding: 10%;
+}
+
+.booking {
+    margin: 2%;
+    border: solid black;
+    padding: 2%;
+
+}
+
+.booking button {
+    background: grey;
+    border: solid thin black;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 2%;
+}
+
+.login {
+    margin: 2%;
+    padding: 2%;
+
+}
+
+.loginForm {
+    background: linear-gradient(45deg, #8E8E8E, #4D4D4D);
+    border: solid black;
+}
+
+.loginFormInner {
+    margin-bottom: 2%;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.loginForm input, button {
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.loginFormInner input {
+    background-color: #f8f8f8;
+    border: solid thin black;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 1%;
+    padding-left: 2%;
+}
+
+.loginFormInner label {
+    font-size: 20px;
+    transition: 0.45s;
+}
+
+.loginFormInner:focus-within label {
+    color: red;
+}
+
+.loginFormButton {
+    margin-top: 5%;
+    margin-bottom: 2%;
+    display: flex;
+    justify-content: center;
+}
+
+.loginFormButton input {
+    padding: 3%;
+    border: solid thin black;
+    background-color: #F8F8F8;
+
+}
+
+.loginForm h2 {
+    font-size: 120%;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    margin: 3%;
+}
+
+.noLogin {
+    margin-top: 5%;
+    padding: 2%;
+    border: solid black;
+    background: linear-gradient(45deg, #B6B6B6, #4D4D4D);
+}
+
+
+
+
+
+footer {
+    font-size: 12px;
+    margin: 5%;
+}
+
+footer hr {
+    margin-bottom: 2%;
+}
