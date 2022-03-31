@@ -69,6 +69,10 @@
     padding: 2%;
 }
 
+.resetPassword {
+    margin: 1%;
+}
+
 .loginForm {
     background: linear-gradient(45deg, #8E8E8E, #4D4D4D);
     border: solid black;
@@ -124,6 +128,14 @@
 
 .loginForm h2 {
     font-size: 120%;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    margin: 3%;
+}
+
+.loginForm .loginReset {
+    font-size: 100%;
     display: flex;
     justify-content: center;
     font-weight: 500;

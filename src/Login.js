@@ -18,6 +18,9 @@ function Login() {
                     <div className='loginFormButton'>
                         <input type = "submit" value = "Log In"></input>
                     </div>
+                    <div className = 'loginReset'>
+                        <Link to = '/ResetPassword'>Reset Password</Link>
+                    </div>
                 </div>
             </form> 
             <div className='noLogin'>

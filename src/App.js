@@ -7,6 +7,7 @@ import Login from './Login.js';
 import Home from './Home.js';
 import Footer from './Footer.js';
 import Register from './Register.js';
+import ResetPassword from './ResetPassword.js';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                         <Route path = '/Booking' element = {<Booking/>} />
                         <Route path = '/Login' element = {<Login/>} />
                         <Route path = '/Register' element = {<Register/>} />
+                        <Route path = '/ResetPassword' element = {<ResetPassword/>} />
                     </Routes>
                 </div>
                 <Footer/>
