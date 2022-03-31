@@ -64,6 +64,11 @@
 
 }
 
+.register {
+    margin: 2%;
+    padding: 2%;
+}
+
 .loginForm {
     background: linear-gradient(45deg, #8E8E8E, #4D4D4D);
     border: solid black;
