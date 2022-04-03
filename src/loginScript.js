@@ -36,16 +36,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
 // http://localhost:3000/ site generation
-app.get('/', function(request, response) {
+app.get('/Login', function(request, response) {
 	// Render login template
-	response.sendFile(path.join(__dirname + '/login.html'));
+	response.sendFile(/*path.join(__dirname + '/Login.js')*/'https://localhost:3000/Login.js');
 });
 
 // http://localhost:3000/auth auth page generation
-app.post('/auth', function(request, response) {
+app.post('/kf5012', function(request, response) {
 	// store input
-	let username = request.body.username;
-	let password = request.body.password;
+	let username = request.body.email;
+	let password = request.body.pwrd;
 
 	// validation for empty
 	if (username && password) {
@@ -59,7 +59,7 @@ app.post('/auth', function(request, response) {
 				request.session.loggedin = true;
 				request.session.username = username;
 				// Redirect to home page
-				response.redirect('/home');
+				response.redirect('/kf5012');
 			} else {
 				response.send('Incorrect Username and/or Password!');
 			}			
@@ -72,7 +72,7 @@ app.post('/auth', function(request, response) {
 });
 
 // http://localhost:3000/home home page generation
-app.get('/home', function(request, response) {
+app.get('/loggedIn', function(request, response) {
 	// If loggedin
 	if (request.session.loggedin) {
 		// return username
@@ -84,4 +84,4 @@ app.get('/home', function(request, response) {
 	response.end();
 });
 
-app.listen(3000);
+app.listen(9999);

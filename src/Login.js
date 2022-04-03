@@ -4,16 +4,16 @@ import { Link } from 'react-router-dom';
 function Login() {
     return(
         <div className = 'login'>
-            <form>
+            <form action="http://localhost:9999/auth" method="POST">
                 <div className='loginForm'>
                     <h2>Login</h2>
                     <div className='loginFormInner'>
                         <label htmlFor = "email">Email: </label>
-                        <input type = "email" id = "email" maxLength = "50" required></input>
+                        <input type = "email" id = "email" maxLength = "50" name="email" required></input>
                     </div>
                     <div className='loginFormInner'>
                         <label htmlFor = "pwrd">Password: </label>
-                        <input type = "password" id = "pwrd" required></input>
+                        <input type = "password" id = "pwrd" name = "pwrd" required></input>
                     </div>
                     <div className='loginFormButton'>
                         <input type = "submit" value = "Log In"></input>
