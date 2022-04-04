@@ -71,8 +71,15 @@ app.post('/auth', function(request, response) {
 	} else {
 		response.send('Please enter Username and Password!');
 		response.redirect('http://localhost:3000/login');
+		console.log(request.session.loggedin + request.session.username);
 		response.end();
 	}
+});
+
+app.get('/logout', function(request, response){
+	request.session.destroy();
+	response.redirect('http://localhost:3000/login');
+	response.end();
 });
 
 app.listen(9999);
