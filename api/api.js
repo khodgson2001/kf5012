@@ -10,9 +10,8 @@ const mysql = require('mysql');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+
 //connect to MySQL db, currently locally ran
-//will need to link up to an exisiting DB from elsewhere
-//poss one on personal domain?\
 const connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
@@ -35,10 +34,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
-// http://localhost:3000/ site generation
+// redirect if go to api homepage
 app.get('/', function(request, response) {
 	// Render login template
-	response.sendFile(path.join(__dirname + '/login.html'));
+	response.redirect('http://localhost:3000');
 });
 
 // http://localhost:3000/auth auth page generation
@@ -59,8 +58,9 @@ app.post('/auth', function(request, response) {
 				// Authenticate the user
 				request.session.loggedin = true;
 				request.session.username = username;
-				// Redirect to home page
-				response.redirect('/home');
+
+				console.log(request.session.username + ' initial logged in at' + console.timeStamp());
+				response.redirect('http://localhost:3000');
 			} else {
 				response.send('Incorrect Username and/or Password!');
 				console.log(username + password);
@@ -78,7 +78,8 @@ app.get('/home', function(request, response) {
 	// If loggedin
 	if (request.session.loggedin) {
 		// return username
-		response.send('Welcome back, ' + request.session.username + '!');
+		console.log(request.session.username + ' logged in at' + console.timeStamp());
+		response.redirect('localhost:3000');
 	} else {
 		// Not logged in
 		response.send('Please login to view this page!');
