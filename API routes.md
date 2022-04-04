@@ -4,7 +4,13 @@ This page will list how to access the API, the routes and the parameters needed 
 
 
 Login: /auth
+
   Params: Username, Password
+
   Method: POST
+  
   Cookies/Sessions set: [loggedin : TRUE , username : data that was passed in]
   
+Logout: /logout
+
+  Clears ALL session variables
