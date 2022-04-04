@@ -10,6 +10,7 @@ const mysql = require('mysql');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const alert = require('alert'); 
 
 //connect to MySQL db, currently locally ran
 const connection = mysql.createConnection({
@@ -62,29 +63,16 @@ app.post('/auth', function(request, response) {
 				console.log(request.session.username + ' initial logged in at' + console.timeStamp());
 				response.redirect('http://localhost:3000');
 			} else {
-				response.send('Incorrect Username and/or Password!');
-				console.log(username + password);
+				alert('Incorrect username and/or password');
+				response.redirect('http://localhost:3000/login');
 			}			
 			response.end();
 		});
 	} else {
 		response.send('Please enter Username and Password!');
+		response.redirect('http://localhost:3000/login');
 		response.end();
 	}
-});
-
-// http://localhost:3000/home home page generation
-app.get('/home', function(request, response) {
-	// If loggedin
-	if (request.session.loggedin) {
-		// return username
-		console.log(request.session.username + ' logged in at' + console.timeStamp());
-		response.redirect('localhost:3000');
-	} else {
-		// Not logged in
-		response.send('Please login to view this page!');
-	}
-	response.end();
 });
 
 app.listen(9999);
