@@ -82,4 +82,22 @@ app.get('/logout', function(request, response){
 	response.end();
 });
 
+app.post('/register', function(request, response){
+	let username = request.body.email;
+	let password = request.body.pwrd;
+	let fname = request.body.fname;
+	let sname = request.body.sname;
+	let dob = request.body.dob;
+
+	if (username && password && fname && sname && dob){
+		connection.query('INSERT INTO mydb.customers (username, password, fName, sName, dob) VALUES (?,?,?,?,?)', 
+						[username, password, fname, sname, dob], function(error, results, fields){
+							response.redirect
+							response.end();
+						}); 
+						
+						//need to create a trigger
+	}
+});
+
 app.listen(9999);
