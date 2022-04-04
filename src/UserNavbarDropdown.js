@@ -7,7 +7,7 @@ function UserNavbarDropdown() {
             <Link to = '/kf5012'>Home</Link>
             <Link to = '/Booking'>Booking</Link>
             <Link to = '/ManageAccount'>ManageAccount</Link>
-            <Link to = '/Login'>Log out</Link>
+            <a href = 'http://localhost:9999/logout'>Log out</a>
         </div>
     );
 }

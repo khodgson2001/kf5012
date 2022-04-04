@@ -6,7 +6,7 @@ function AdminNavbarDropdown() {
         <div className = 'navDropdown'>
             <Link to = '/kf5012'>Home</Link>
             <Link to = '/ManageBookings'>Manage Bookings</Link>
-            <Link to = '/Login'>Log out</Link>
+            <a href = 'http://localhost:9999/logout'>Log out</a>
         </div>
     );
 }
