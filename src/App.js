@@ -8,6 +8,10 @@ import Home from './Home.js';
 import Footer from './Footer.js';
 import Register from './Register.js';
 import ResetPassword from './ResetPassword.js';
+import AdminNavbarDropdown from './AdminNavbarDropdown.js';
+import UserNavbarDropdown from './UserNavbarDropdown.js';
+import ManageUserAccount from './ManageUserAccount.js';
+import ManageBookings from './ManageBookings.js';
 
 function App() {
     return (
@@ -22,6 +26,8 @@ function App() {
                         <Route path = '/Login' element = {<Login/>} />
                         <Route path = '/Register' element = {<Register/>} />
                         <Route path = '/ResetPassword' element = {<ResetPassword/>} />
+                        <Route path = '/ManageAccount' element = {<ManageUserAccount/>} />
+                        <Route path = '/ManageBookings' element = {<ManageBookings/>} />
                     </Routes>
                 </div>
                 <Footer/>
