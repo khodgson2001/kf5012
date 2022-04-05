@@ -89,13 +89,15 @@ app.get('/logout', function(request, response){
 app.post('/register', function(request, response){
 	let email = request.body.email;
 	let password = request.body.pwrd;
-	let fname = request.body.fname;
-	let sname = request.body.sname;
-	let dob = request.body.dob;
+	let fName = request.body.fName;
+	let lName = request.body.lName;
 
-	if (username && password && fname && sname && dob){
-		connection.query('INSERT INTO mydb.customers (email, password, fName, sName, dob) VALUES (?,?,?,?,?)', 
-						[username, password, fname, sname, dob], function(error, results, fields){
+	if (email && password && fName && lName && dob){
+		connection.query(`
+		BEGIN;
+		INSERT INTO mydb.customers (email, password, fName, sName) VALUES (?,?,?,?);
+		INSERT INTO mydb.users (username, password, customer_customerID) VALUES (?, ?, LAST_INSERT_ID());
+		COMMIT;`, [email, password, fName, lName, email, password], function(error, results, fields){
 							console.log(results);
 							if (error) throw error;
 							
@@ -109,7 +111,6 @@ app.post('/register', function(request, response){
 							}
 							response.end();
 						}); 
-						//use LAST_INSERT_ID() to link up customer ID and userID when inserting into the  tables.
 	}
 });
 
