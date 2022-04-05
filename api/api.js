@@ -6,7 +6,7 @@ reference: https://codeshack.io/basic-login-system-nodejs-express-mysql/
 */
 
 
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'static')));
 // redirect if go to api homepage
 app.get('/', function(request, response) {
 	// Render login template
-	response.redirect('http://localhost:3000');
+	response.redirect('http://localhost:3000/kf5012');
 });
 
 // http://localhost:3000/auth auth page generation
@@ -59,9 +59,13 @@ app.post('/auth', function(request, response) {
 				// Authenticate the user
 				request.session.loggedin = true;
 				request.session.username = username;
+				
+				if (results.customer_customerID == null) request.session.userType = 1;
+				else if (results.staff_staffID == null) request.session.userType = 2;
+				else console.log(request.session.username + ' does not seem to be a customer or a staff');
 
 				console.log(request.session.username + ' initial logged in at' + console.timeStamp());
-				response.redirect('http://localhost:3000');
+				response.redirect('http://localhost:3000/kf5012');
 			} else {
 				alert('Incorrect username and/or password');
 				response.redirect('http://localhost:3000/login');
@@ -83,16 +87,26 @@ app.get('/logout', function(request, response){
 });
 
 app.post('/register', function(request, response){
-	let username = request.body.email;
+	let email = request.body.email;
 	let password = request.body.pwrd;
 	let fname = request.body.fname;
 	let sname = request.body.sname;
 	let dob = request.body.dob;
 
 	if (username && password && fname && sname && dob){
-		connection.query('INSERT INTO mydb.customers (username, password, fName, sName, dob) VALUES (?,?,?,?,?)', 
+		connection.query('INSERT INTO mydb.customers (email, password, fName, sName, dob) VALUES (?,?,?,?,?)', 
 						[username, password, fname, sname, dob], function(error, results, fields){
-							response.redirect
+							console.log(results);
+							if (error) throw error;
+							
+							if (results.length > 0){
+								console.log(email + ' registered');
+								alert('Account registered. Please login');
+								response.redirect('http://localhost:3000/login');
+							} else { 
+								alert('Error registering. Please try again');
+								response.redirect('http://localhost:3000/register');
+							}
 							response.end();
 						}); 
 						
