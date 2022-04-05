@@ -109,8 +109,7 @@ app.post('/register', function(request, response){
 							}
 							response.end();
 						}); 
-						
-						//need to create a trigger
+						//use LAST_INSERT_ID() to link up customer ID and userID when inserting into the  tables.
 	}
 });
 
