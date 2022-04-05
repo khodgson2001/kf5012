@@ -14,3 +14,9 @@ Login: /auth
 Logout: /logout
 
   Clears ALL session variables
+
+Register: /register
+
+  Params: fName, sName, email, password, dob
+
+  Method: POST
