@@ -93,11 +93,8 @@ app.post('/register', function(request, response){
 	let lName = request.body.lName;
 
 	if (email && password && fName && lName){
-		connection.query(`
-		BEGIN;
-		INSERT INTO mydb.customers (email, fName, sName) VALUES (?,?,?);
-		INSERT INTO mydb.users (username, password, customer_customerID) VALUES (?, ?, LAST_INSERT_ID());
-		COMMIT;`, [email, fName, lName, email, password], function(error, results, fields){
+		connection.query(`BEGIN; INSERT INTO mydb.customers (email, fName, sName) VALUES (?, ?, ?); INSERT INTO mydb.users (username, password, customer_customerID) VALUES (?, ?, LAST_INSERT_ID()); COMMIT;`, 
+		[email, fName, lName, email, password], function(error, results, fields){
 							console.log(results);
 							if (error) throw error;
 							
