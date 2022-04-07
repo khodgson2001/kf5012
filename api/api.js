@@ -92,12 +92,12 @@ app.post('/register', function(request, response){
 	let fName = request.body.fName;
 	let lName = request.body.lName;
 
-	if (email && password && fName && lName && dob){
+	if (email && password && fName && lName){
 		connection.query(`
 		BEGIN;
-		INSERT INTO mydb.customers (email, password, fName, sName) VALUES (?,?,?,?);
+		INSERT INTO mydb.customers (email, fName, sName) VALUES (?,?,?);
 		INSERT INTO mydb.users (username, password, customer_customerID) VALUES (?, ?, LAST_INSERT_ID());
-		COMMIT;`, [email, password, fName, lName, email, password], function(error, results, fields){
+		COMMIT;`, [email, fName, lName, email, password], function(error, results, fields){
 							console.log(results);
 							if (error) throw error;
 							
@@ -111,6 +111,11 @@ app.post('/register', function(request, response){
 							}
 							response.end();
 						}); 
+	} else {
+		alert('There was an issue!');
+		response.redirect('http://localhost:3000/Register');
+		console.log(email + password + fName + lName);
+		response.end();
 	}
 });
 
