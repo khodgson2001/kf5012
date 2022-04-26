@@ -124,4 +124,19 @@ app.get('/cuts', function(request, response){
 	});
 });
 
+//checks availability of a specific appointment
+/*logic:
+	pass in the start (x) and length of time (y), and who (z) with
+	query DB with something like:
+		SELECT * FROM mydb.appointments WHERE staff_staffID = z;
+		
+	IF (E1 <= S2 || S1 >= E2) THEN BOOK
+	ELSE
+	NOPE
+
+*/
+app.get('/availability', function(request, response){
+	response.send('coming soon');
+});
+
 app.listen(9999);
