@@ -20,3 +20,7 @@ Register: /register
   Params: fName, sName, email, password, dob
 
   Method: POST
+
+Cuts: /cuts
+
+  Returns JSON for all haircuts and their info.

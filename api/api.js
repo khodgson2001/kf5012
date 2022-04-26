@@ -77,11 +77,14 @@ app.post('/auth', function(request, response) {
 	}
 });
 
+//Clears all session variables
 app.get('/logout', function(request, response){
 	request.session.destroy();
 	response.redirect('http://localhost:3000/login');
 });
 
+
+//WIP
 app.post('/register', function(request, response){
 	let email = request.body.email;
 	let password = request.body.pwrd;
@@ -113,6 +116,8 @@ app.post('/register', function(request, response){
 	}
 });
 
+
+//Returns all available cuts in JSON format
 app.get('/cuts', function(request, response){
 	connection.query('SELECT * FROM mydb.cuts', function(error, results, fields) {
 		response.json(results);
