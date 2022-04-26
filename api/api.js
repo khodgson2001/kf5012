@@ -6,7 +6,7 @@ reference: https://codeshack.io/basic-login-system-nodejs-express-mysql/
 */
 
 
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -37,7 +37,6 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 // redirect if go to api homepage
 app.get('/', function(request, response) {
-	// Render login template
 	response.redirect('http://localhost:3000/kf5012');
 });
 
@@ -70,20 +69,17 @@ app.post('/auth', function(request, response) {
 				alert('Incorrect username and/or password');
 				response.redirect('http://localhost:3000/login');
 			}			
-			response.end();
 		});
 	} else {
 		response.send('Please enter Username and Password!');
 		response.redirect('http://localhost:3000/login');
 		console.log(request.session.loggedin + request.session.username);
-		response.end();
 	}
 });
 
 app.get('/logout', function(request, response){
 	request.session.destroy();
 	response.redirect('http://localhost:3000/login');
-	response.end();
 });
 
 app.post('/register', function(request, response){
@@ -92,10 +88,11 @@ app.post('/register', function(request, response){
 	let fName = request.body.fName;
 	let lName = request.body.lName;
 
+	console.log(fName, lName, email, password);
+
 	if (email && password && fName && lName){
 		connection.query(`BEGIN; INSERT INTO mydb.customers (email, fName, sName) VALUES (?, ?, ?); INSERT INTO mydb.users (username, password, customer_customerID) VALUES (?, ?, LAST_INSERT_ID()); COMMIT;`, 
-		[email, fName, lName, email, password], function(error, results, fields){
-							console.log(results);
+		[connection.escape(email), connection.escape(fName), connection.escape(lName), connection.escape(email), connection.escape(password)], function(error, results, fields){
 							if (error) throw error;
 							
 							if (results.length > 0){
@@ -114,6 +111,12 @@ app.post('/register', function(request, response){
 		console.log(email + password + fName + lName);
 		response.end();
 	}
+});
+
+app.get('/cuts', function(request, response){
+	connection.query('SELECT * FROM mydb.cuts', function(error, results, fields) {
+		response.json(results);
+	});
 });
 
 app.listen(9999);
