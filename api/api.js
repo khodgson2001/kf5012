@@ -6,7 +6,7 @@ reference: https://codeshack.io/basic-login-system-nodejs-express-mysql/
 */
 
 
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -49,7 +49,7 @@ app.post('/auth', function(request, response) {
 	// validation for empty
 	if (username && password) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
-		connection.query('SELECT * FROM mydb.users WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+		connection.query('SELECT * FROM mydb.users WHERE username = ? AND password = ?', [username, password], function(error, results) {
 			// If there is an issue with the query, output the error
 			console.log(results);
 			if (error) throw error;
@@ -83,76 +83,53 @@ app.get('/logout', function(request, response){
 	response.redirect('http://localhost:3000/login');
 });
 
-
-//WIP
+//registration route
 app.post('/register', function(request, response){
 	let email = request.body.email;
 	let password = request.body.pwrd;
 	let fName = request.body.fName;
 	let lName = request.body.lName;
 
-	console.log(fName, lName, email, password);
-
-	function fail(){
-		alert('Error registering. Please try again');
-		response.redirect('http://localhost:3000/register');
+	function reg_failed(error, inConn){ 
+		if (inConn === 0 && error === null){ // if not in a connection (0)
+			alert('Error registering. Please try again'); // client facing error
+			response.redirect('http://localhost:3000/register'); // redirect to registration form
+			response.end();
+		}
+		if(error && inConn === 1) connection.rollback(function(){ //rollback the transaction if failed
+			throw error; //throw error
+		});
 	}
 
 	if (email && password && fName && lName){
-		connection.beginTransaction(function(error){
-			if (error) {throw error;}
-			connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [connection.escape(email), connection.escape(fName), connection.escape(lName)], function(error, results){
-				if(error) connection.rollback(function(){
-					fail();
-					throw error;
-				});
+		connection.beginTransaction(function(error){ // starts a transaction - need to do several queries, one uses the previous' insert ID as a ForeignKey in DB
 			
-				let custID = results.insertId;
+			if (error) {throw error;} //throw any errors
 			
-				connection.query(`INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, ?);`, [connection.escape(email), connection.escape(password), custID], function(error, results){
-					if (error) connection.rollback(function(){
-						fail();
-						throw error;
-					});
+			connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [email, fName, lName], function(error, results){ // insert into cust table, escape strings for xtr validate
+				reg_failed(error, 1); // run reg_failed function
+				
+				let custID = results.insertId; // set custID var as the previous insertID, used in next query
+				
+				connection.query(`INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, ?);`, [email, password, custID], function(error){  // insert into user table, escape strings for xtr validate
+					reg_failed(error, 1); // ruun reg_failed function
 
-					connection.commit(function(error){
-						if(error) connection.rollback(function(){
-							fail();
-							throw error;
-						});
-						
-						connection.end();
-						console.log(email + ' registered');
-						alert('Account registered. Please login');
-						response.redirect('http://localhost:3000/login');
+					connection.commit(function(error){ // commit the transaction
+						reg_failed(error, 1); // run reg_failed function
+						connection.end(); // close DB connection
+						console.log(email + ' registered'); // log registration in console
+						alert('Account registered. Please login'); // client facing success msg
+						response.redirect('http://localhost:3000/login'); // redirect to login form
 
 					});
 				});
 			});
 		});
 
-
-		/*connection.query("START TRANSACTION; INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?); INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, LAST_INSERT_ID()); COMMIT;", //something errors on this line and it's not escape chars...
-		[connection.escape(email), connection.escape(fName), connection.escape(lName), connection.escape(email), connection.escape(password)], function(error, results, fields){ //doesn't seem to be getting any results/executing the query
-							if (error) throw error;
-							
-							console.log(email + fName + lName + password);
-
-							if (results.length > 0){
-								console.log(email + ' registered');
-								alert('Account registered. Please login');
-								response.redirect('http://localhost:3000/login');
-							} else { 
-								alert('Error registering. Please try again');
-								response.redirect('http://localhost:3000/register');
-							}
-							response.end();
-						}); */
 	} else {
-		alert('There was an issue!');
-		response.redirect('http://localhost:3000/Register');
-		console.log(email + password + fName + lName);
-		response.end();
+		
+		reg_failed(null, 0);
+
 	}
 });
 
