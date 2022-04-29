@@ -93,11 +93,51 @@ app.post('/register', function(request, response){
 
 	console.log(fName, lName, email, password);
 
+	function fail(){
+		alert('Error registering. Please try again');
+		response.redirect('http://localhost:3000/register');
+	}
+
 	if (email && password && fName && lName){
-		connection.query(`BEGIN; INSERT INTO mydb.customers (email, fName, sName) VALUES (?, ?, ?); INSERT INTO mydb.users (username, password, customer_customerID) VALUES (?, ?, LAST_INSERT_ID()); COMMIT;`, 
-		[connection.escape(email), connection.escape(fName), connection.escape(lName), connection.escape(email), connection.escape(password)], function(error, results, fields){
+		connection.beginTransaction(function(error){
+			if (error) {throw error;}
+			connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [connection.escape(email), connection.escape(fName), connection.escape(lName)], function(error, results){
+				if(error) connection.rollback(function(){
+					fail();
+					throw error;
+				});
+			
+				let custID = results.insertId;
+			
+				connection.query(`INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, ?);`, [connection.escape(email), connection.escape(password), custID], function(error, results){
+					if (error) connection.rollback(function(){
+						fail();
+						throw error;
+					});
+
+					connection.commit(function(error){
+						if(error) connection.rollback(function(){
+							fail();
+							throw error;
+						});
+						
+						connection.end();
+						console.log(email + ' registered');
+						alert('Account registered. Please login');
+						response.redirect('http://localhost:3000/login');
+
+					});
+				});
+			});
+		});
+
+
+		/*connection.query("START TRANSACTION; INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?); INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, LAST_INSERT_ID()); COMMIT;", //something errors on this line and it's not escape chars...
+		[connection.escape(email), connection.escape(fName), connection.escape(lName), connection.escape(email), connection.escape(password)], function(error, results, fields){ //doesn't seem to be getting any results/executing the query
 							if (error) throw error;
 							
+							console.log(email + fName + lName + password);
+
 							if (results.length > 0){
 								console.log(email + ' registered');
 								alert('Account registered. Please login');
@@ -107,7 +147,7 @@ app.post('/register', function(request, response){
 								response.redirect('http://localhost:3000/register');
 							}
 							response.end();
-						}); 
+						}); */
 	} else {
 		alert('There was an issue!');
 		response.redirect('http://localhost:3000/Register');
