@@ -1,8 +1,6 @@
 /*
 load in modules;
 mysql, express, express-session, path
-
-reference: https://codeshack.io/basic-login-system-nodejs-express-mysql/
 */
 
 
@@ -136,7 +134,8 @@ app.post('/register', function(request, response){
 
 //Returns all available cuts in JSON format
 app.get('/cuts', function(request, response){
-	connection.query('SELECT * FROM mydb.cuts', function(error, results, fields) {
+	connection.query('SELECT * FROM mydb.cuts', function(error, results) {
+		if (error) throw error;
 		response.json(results);
 	});
 });
@@ -153,6 +152,20 @@ app.get('/cuts', function(request, response){
 
 */
 app.get('/availability', function(request, response){
+	/*let date = request.date;
+	let time_start = request.time_start;
+	let time_end = request.time_end;
+	let booking = request.booking;
+
+	connection.query('SELECT * FROM mydb.appointments WHERE date = ?', date, function(error, results){
+		if (error) throw error;
+		
+		else if (results){
+			if (time_start >= results.)
+		}
+
+	});
+	*/
 	response.send('coming soon');
 });
 
