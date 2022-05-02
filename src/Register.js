@@ -3,7 +3,7 @@ import React from 'react';
 function Register() {
     return(
         <div className = 'register'>
-            <form action='http://localhost:9999/register' method='POST'>
+            <form action='http://localhost:9999/user/register' method='POST'>
                 <div className='loginForm'>
                     <h2>Register account</h2>
                     <div className='loginFormInner'>

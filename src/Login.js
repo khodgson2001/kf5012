@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Login() {
     return(
         <div className = 'login'>
-            <form action="http://localhost:9999/auth" method="POST">
+            <form action="http://localhost:9999/user/login" method="POST">
                 <div className='loginForm'>
                     <h2>Login</h2>
                     <div className='loginFormInner'>
