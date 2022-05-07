@@ -5,6 +5,12 @@ const path = require('path');
 const alert = require('alert'); 
 const router = express.Router();
 
+const connection = mysql.createConnection({
+	host     : 'localhost',
+	user     : 'root',
+	password : 'password',
+	database : 'mydb'
+});
 
 router.get('/', function(request,response){
     response.send("Please specify an action.");

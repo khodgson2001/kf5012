@@ -5,13 +5,37 @@ const path = require('path');
 const alert = require('alert'); 
 const router = express.Router();
 
+const connection = mysql.createConnection({
+	host     : 'localhost',
+	user     : 'root',
+	password : 'password',
+	database : 'mydb'
+});
 
-router.get('/', function(request,response){
+
+router.param('userid', function(req, res, next, userid) {
+	req.userid = userid;
+	next();
+  });
+
+router.get('/:userid', function(request,response){
+	let userID = request.userid;
+	connection.query('SELECT * from mydb.users WHERE userID = ?', [userID], function(error, results){
+		if (error) throw error;
+		if (results.length > 0){
+			response.json(results);
+		} else {
+			response.send("No user exists with that ID. Please try again.")
+		}
+
+	});
 /*
 return json of specified user details
 pass in params: the userID[1] being searched, loginToken, the userID[2] of searcher
 if [2] is that of an admin or the same as [1], and loginToken and [2] matches what is in DB, then return JSON of user details
 otherwise return JSON with an error
+
+HAS NO VALIDATION RN
 */
 });
 
