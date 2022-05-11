@@ -12,23 +12,35 @@ const connection = mysql.createConnection({
 	database : 'mydb'
 });
 
-
-router.param('userid', function(req, res, next, userid) {
-	req.userid = userid;
+// allows for a userID to be passed in via url args
+router.param('userid', function(request, response, next, userid) {
+	request.userid = userid;
 	next();
-  });
+		});
 
-router.get('/:userid', function(request,response){
+
+		//none of this is going to work yet, so don't be optimistic :) 
+router.post('/:userid', function(request,response){
 	let userID = request.userid;
-	connection.query('SELECT * from mydb.users WHERE userID = ?', [userID], function(error, results){
-		if (error) throw error;
-		if (results.length > 0){
-			response.json(results);
-		} else {
-			response.send("No user exists with that ID. Please try again.")
-		}
+	let searcherID = request.body.searcherID;
+
+	if ((userID === null)||(searcherID === null)) response.json(error, 'missing parameters');
+
+	connection.beginTransaction(function(error){
+
+		connection.query('SELECT * from mydb.users WHERE userID = ?', [userID], function(error, results){
+			if (error) throw error;
+			if (results.length > 0){
+				response.json(results);
+			} else {
+				response.send("No user exists with that ID. Please try again.")
+			}
+	
+		});
 
 	});
+
+	
 /*
 return json of specified user details
 pass in params: the userID[1] being searched, loginToken, the userID[2] of searcher
@@ -85,7 +97,7 @@ router.get('/logout', function(request, response){
 
 //registration route
 router.post('/register', function(request, response){
-    console.log('register accessed');
+				console.log('register accessed');
 	let email = request.body.email;
 	let password = request.body.pwrd;
 	let fName = request.body.fName;
