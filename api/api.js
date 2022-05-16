@@ -9,6 +9,8 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const alert = require('alert'); 
+const cookieParser = require('cookie-parser');
+
 
 //connect to MySQL db, currently locally ran
 const connection = mysql.createConnection({
@@ -20,6 +22,14 @@ const connection = mysql.createConnection({
 
 //intialize express
 const app = express();
+
+app.use(cookieParser());
+
+function getCookie(request){
+	let cookie = request.headers.cookie;
+	return cookie.split('; ');
+}
+
 
 //create session variables
 app.use(session({
@@ -54,14 +64,14 @@ app.post('/auth', function(request, response) {
 			// If the account exists
 			if (results.length > 0) {
 				// Authenticate the user
-				request.session.loggedin = true;
-				request.session.username = username;
+				response.cookie('loggedin', true);
+				response.cookie('username', username);
 				
-				if (results.customer_customerID == null) request.session.userType = 1;
-				else if (results.staff_staffID == null) request.session.userType = 2;
-				else console.log(request.session.username + ' does not seem to be a customer or a staff');
+				if (results.customer_customerID == null) response.cookie('userType',1);
+				else if (results.staff_staffID == null) response.cookie('userType',2);
+				else console.log(username + ' does not seem to be a customer or a staff');
 
-				console.log(request.session.username + ' initial logged in at' + console.timeStamp());
+				console.log(username + ' initial logged in at ' + Date.now());
 				response.redirect('http://localhost:3000/kf5012');
 			} else {
 				alert('Incorrect username and/or password');
@@ -71,13 +81,15 @@ app.post('/auth', function(request, response) {
 	} else {
 		response.send('Please enter Username and Password!');
 		response.redirect('http://localhost:3000/login');
-		console.log(request.session.loggedin + request.session.username);
 	}
 });
 
-//Clears all session variables
+//Clears all cookies
 app.get('/logout', function(request, response){
-	request.session.destroy();
+	response.clearCookie('loggedin', {path:'/auth'});
+	response.clearCookie('userType', {path:'/auth'});
+	response.clearCookie('username', {path:'/auth'});
+	console.log('cleared cookies');
 	response.redirect('http://localhost:3000/login');
 });
 
