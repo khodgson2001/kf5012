@@ -24,7 +24,6 @@ function App() {
                         <Route path = '/kf5012' element = {<Home/>} />
                         <Route path = '/Booking' element = {<Booking/>} />
                         <Route path = '/Login' element = {<Login/>} />
-                        <Route path = '/Register' element = {<Register/>} />
                         <Route path = '/ResetPassword' element = {<ResetPassword/>} />
                         <Route path = '/ManageAccount' element = {<ManageUserAccount/>} />
                         <Route path = '/ManageBookings' element = {<ManageBookings/>} />
