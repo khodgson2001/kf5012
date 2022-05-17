@@ -158,10 +158,15 @@
 
 .home .outerShell {
     border: solid black;
+    margin-bottom: 2%;
     padding: 2%;
     background: linear-gradient(45deg, #c2c2c2, #696969);
     display: flex;
     justify-content: space-evenly;
+}
+
+.home .outerShell img {
+    width: 50%;
 }
 
 .home .innerContent h3{
@@ -171,6 +176,7 @@
 .home .innerContent p{
     margin-bottom: 5%;
 }
+
 
 
 

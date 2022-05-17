@@ -6,7 +6,6 @@ import Booking from './Booking.js';
 import Login from './Login.js';
 import Home from './Home.js';
 import Footer from './Footer.js';
-import Register from './Register.js';
 import ResetPassword from './ResetPassword.js';
 import AdminNavbarDropdown from './AdminNavbarDropdown.js';
 import UserNavbarDropdown from './UserNavbarDropdown.js';
