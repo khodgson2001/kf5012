@@ -43,6 +43,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	next();
+	});
+  
+
+
 // redirect if go to api homepage
 app.get('/', function(request, response) {
 	response.redirect('http://localhost:3000/kf5012');
