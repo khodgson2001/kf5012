@@ -10,6 +10,7 @@ const session = require('express-session');
 const path = require('path');
 const alert = require('alert'); 
 const cookieParser = require('cookie-parser');
+const util = require('util');
 
 
 //connect to MySQL db, currently locally ran
@@ -68,6 +69,7 @@ app.post('/auth', function(request, response) {
 		connection.query('SELECT * FROM mydb.users WHERE username = ? AND password = ?', [username, password], function(error, results) {
 			// If there is an issue with the query, output the error
 			console.log(results);
+			console.log();
 			if (error) throw error;
 			// If the account exists
 			if (results.length > 0) {
@@ -75,9 +77,15 @@ app.post('/auth', function(request, response) {
 				response.cookie('loggedin', true, {httpOnly: false});
 				response.cookie('username', username, {httpOnly: false});
 				
-				if (results.customer_customerID == null) response.cookie('userType',1, {httpOnly: false});
-				else if (results.staff_staffID == null) response.cookie('userType',2), {httpOnly: false};
-				else console.log(username + ' does not seem to be a customer or a staff');
+				if (results[0]['customer_customerID']) {
+					response.cookie('userType', 1 , {httpOnly: false});
+				}
+				else if (results[0]['staff_staffID']) {
+					response.cookie('userType', 2 , {httpOnly: false});
+				}
+				else{
+					console.log(username + ' does not seem to be a customer or a staff');
+				}
 
 				console.log(username + ' initial logged in at ' + Date.now());
 				response.redirect('http://localhost:3000/kf5012');
