@@ -94,9 +94,9 @@ app.post('/auth', function(request, response) {
 
 //Clears all cookies
 app.get('/logout', function(request, response){
-	response.clearCookie('loggedin', {path:'/auth'});
-	response.clearCookie('userType', {path:'/auth'});
-	response.clearCookie('username', {path:'/auth'});
+	response.set('loggedin', {expire: Date.now()});
+	response.set('userType', {expire: Date.now()});
+	response.set('username', {expire: Date.now()});
 	console.log('cleared cookies');
 	response.redirect('http://localhost:3000/login');
 });
