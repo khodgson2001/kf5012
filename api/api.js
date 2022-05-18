@@ -72,11 +72,11 @@ app.post('/auth', function(request, response) {
 			// If the account exists
 			if (results.length > 0) {
 				// Authenticate the user
-				response.cookie('loggedin', true);
-				response.cookie('username', username);
+				response.cookie('loggedin', true, {httpOnly: false});
+				response.cookie('username', username, {httpOnly: false});
 				
-				if (results.customer_customerID == null) response.cookie('userType',1);
-				else if (results.staff_staffID == null) response.cookie('userType',2);
+				if (results.customer_customerID == null) response.cookie('userType',1, {httpOnly: false});
+				else if (results.staff_staffID == null) response.cookie('userType',2), {httpOnly: false};
 				else console.log(username + ' does not seem to be a customer or a staff');
 
 				console.log(username + ' initial logged in at ' + Date.now());
@@ -94,9 +94,9 @@ app.post('/auth', function(request, response) {
 
 //Clears all cookies
 app.get('/logout', function(request, response){
-	response.set('loggedin', {expire: Date.now()});
-	response.set('userType', {expire: Date.now()});
-	response.set('username', {expire: Date.now()});
+	response.cookie('loggedin', '', {expire: Date.now()});
+	response.cookie('userType', '',{expire: Date.now()});
+	response.cookie('username', '',{expire: Date.now()});
 	console.log('cleared cookies');
 	console.log(Date.now());
 	response.redirect('http://localhost:3000/login');
