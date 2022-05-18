@@ -7,62 +7,55 @@ function NavDropdown() {
 
     const [cookies, setCookie] = useCookies();
 
-    function loggedOutUser(){
-        return (
-            <div className = 'navDropdown'>
-            <Link to = '/kf5012'>Home</Link>
-            <Link to = '/Booking'>Booking</Link>
-            <Link to = '/Login'>Login</Link>
-            <Link to = '/Logout'>Logout</Link>
-        </div>
-        );
-    }
+    const [loggedIn, setLoggedIn] = useState(false);
 
-    function customerUser(){
-        return(
-            <div className = 'navDropdown'>
-            <Link to = '/kf5012'>Home</Link>
-            <Link to = '/Booking'>Booking</Link>
-            <Link to = '/ManageAccount'>ManageAccount</Link>
-            <a href = 'http://localhost:9999/logout'>Log out</a>
-        </div>
-        );
-    }
+    const [customerUser, setCustomerUser] = useState(false);
 
-    function adminUser(){
-        return(
-            <div className = 'navDropdown'>
-            <Link to = '/kf5012'>Home</Link>
-            <Link to = '/ManageBookings'>Manage Bookings</Link>
-            <a href = 'http://localhost:9999/logout'>Log out</a>
-        </div>
-        )
-    }
+    const [adminUser, setAdminUser] = useState(false);
 
-    function userLoggedIn(){
-        if(cookies.loggedIn == true && cookies.userType == 1)
+    
+
+    function evaluateUser() {
+        if(cookies.loggedin == 'true')
         {
-            customerUser();
-        }
-        else if(cookies.loggedIn == true && cookies.userType == 2)
-        {
-            adminUser();
+            setLoggedIn(true);
+            if(cookies.userType === 1)
+            {
+                setCustomerUser(true);
+                setAdminUser(false);
+            }
+            else if(cookies.userType === 2)
+            {
+                setAdminUser(true);
+                setCustomerUser(false);
+            }
+            else
+            {
+                setLoggedIn(false);
+            }
         }
         else
         {
-            loggedOutUser();
+            setLoggedIn(false);
         }
     }
 
     useEffect(() => {
         console.log(cookies);
+        evaluateUser();
     }, []);
+
+    //Try use variables that represent each button e.g. 1st button, 2nd button, 3rd button and assign those the values based upon the if statements above
 
     return(
         <div className = 'navDropdown'>
             <Link to = '/kf5012'>Home</Link>
             <Link to = '/Booking'>Booking</Link>
-            <Link to = '/Login'>Login</Link>
+            {loggedIn && <a href = 'http://localhost:9999/logout'>Logout</a>}
+            {!loggedIn && <Link to = '/Login'>Login</Link>}
+            {customerUser && <Link to = '/ManageUserAccount'>Manage Account</Link>}
+            {adminUser && <Link to = '/ManageBookings'>Manage Bookings</Link>}
+            
         </div>
     );
     
