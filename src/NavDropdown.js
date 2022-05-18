@@ -58,13 +58,11 @@ function NavDropdown() {
         console.log(cookies);
     }, []);
 
-    /*Logout link is TEMP */
     return(
         <div className = 'navDropdown'>
             <Link to = '/kf5012'>Home</Link>
             <Link to = '/Booking'>Booking</Link>
             <Link to = '/Login'>Login</Link>
-            <Link to = '/Logout'>Logout</Link>
         </div>
     );
     
