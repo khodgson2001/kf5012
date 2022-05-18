@@ -16,7 +16,6 @@ function NavDropdown() {
 
 
 
-
     
 
     function evaluateUser() {
@@ -54,11 +53,12 @@ function NavDropdown() {
     return(
         <div className = 'navDropdown'>
             <Link to = '/kf5012'>Home</Link>
-            <Link to = '/Booking'>Booking</Link>
-            {loggedIn && <a href = 'http://localhost:9999/logout'>Logout</a>}
-            {!loggedIn && <Link to = '/Login'>Login</Link>}
+            {customerUser && <Link to = '/Booking'>Booking</Link>}
             {customerUser && <Link to = '/ManageUserAccount'>Manage Account</Link>}
             {adminUser && <Link to = '/ManageBookings'>Manage Bookings</Link>}
+            {loggedIn && <a href = 'http://localhost:9999/logout'>Logout</a>}
+            {!loggedIn && <Link to = '/Login'>Login</Link>}
+            
             
         </div>
     );

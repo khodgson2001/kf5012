@@ -33,6 +33,8 @@
 
 .navDropdown a {
     text-decoration: none;
+    text-align: center;
+    max-height: 50px;
     color: white;
     display: flex;
     justify-content: center;
