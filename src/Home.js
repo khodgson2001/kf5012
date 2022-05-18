@@ -16,6 +16,17 @@ function Home() {
             });
     }, []);
 
+    function availabilityCheck(availablity) {
+        if(availablity == 1)
+            {
+                return "Yes";
+            }
+        else
+            {
+                return "No";
+            }
+    };
+
     return(
         <div className='home'>
              {cuts && cuts.map((cut) => (
@@ -24,11 +35,10 @@ function Home() {
                     <div className='innerContent'>
                         <h2>{ cut.name }</h2>
                         <p>{ cut.description }</p>
-                        <p>{ cut.hairLength }</p>
-                        <p>{ cut.duration }</p>
-                        <p>£{ cut.cost }</p>
-                        <p>{ cut.available }</p>
-                        
+                        <p>Length: { cut.hairLength }</p>
+                        <p>Time: { cut.duration } minutes</p>
+                        <p>Cost: £{ cut.cost }</p>
+                        <p>Currently available: { availabilityCheck(cut.available) }</p>
                     </div>
                 </div>
             ))}
