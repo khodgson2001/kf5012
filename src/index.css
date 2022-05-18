@@ -167,14 +167,19 @@
 
 .home .outerShell img {
     width: 50%;
+    border-radius: 5px;
+    border: thin solid black;
 }
 
-.home .innerContent h3{
+.home .innerContent h2{
+    color: #c91616;
     margin-bottom: 5%;
+    margin-left: 5%;
 }
 
 .home .innerContent p{
     margin-bottom: 5%;
+    margin-left: 5%;
 }
 
 

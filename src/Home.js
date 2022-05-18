@@ -35,10 +35,10 @@ function Home() {
                     <div className='innerContent'>
                         <h2>{ cut.name }</h2>
                         <p>{ cut.description }</p>
-                        <p>Length: { cut.hairLength }</p>
-                        <p>Time: { cut.duration } minutes</p>
-                        <p>Cost: £{ cut.cost }</p>
-                        <p>Currently available: { availabilityCheck(cut.available) }</p>
+                        <p><b>Length:</b> { cut.hairLength }</p>
+                        <p><b>Time:</b> { cut.duration } minutes</p>
+                        <p><b>Cost:</b> £{ cut.cost }</p>
+                        <p><b>Currently available:</b> { availabilityCheck(cut.available) }</p>
                     </div>
                 </div>
             ))}
