@@ -1,9 +1,18 @@
 import React from 'react';
+import { Cookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
+ 
 
 function Logout() {
+
+    let logOut = () => {
+
+        Cookies.remove("loggedin");
+      
+      }
+
     return(
-        <a href = 'http://localhost:9999/logout'>logout</a>
+        <button onClick = {logOut}>logout</button>
     );
 }
 
