@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+
+
 function Login() {
     return(    
         <><div className='login'>
@@ -37,11 +39,11 @@ function Login() {
                         </div>
                         <div className='loginFormInner'>
                             <label htmlFor="email">Email: </label>
-                            <input type="email" id="email" name="email" maxLength="50" required></input>
+                            <input type="email" id="emailReg" name="emailReg" maxLength="50" required></input>
                         </div>
                         <div className='loginFormInner'>
                             <label htmlFor="pwrd">Password: </label>
-                            <input type="password" id="pwrd" name="pwrd" required></input>
+                            <input type="password" id="pwrdReg" name="pwrdReg" required></input>
                         </div>
                         <div className='loginFormButton'>
                             <input type="submit" value="Log In"></input>

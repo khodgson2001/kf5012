@@ -11,6 +11,7 @@ import AdminNavbarDropdown from './AdminNavbarDropdown.js';
 import UserNavbarDropdown from './UserNavbarDropdown.js';
 import ManageUserAccount from './ManageUserAccount.js';
 import ManageBookings from './ManageBookings.js';
+import Logout from './Logout';
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                         <Route path = '/ResetPassword' element = {<ResetPassword/>} />
                         <Route path = '/ManageAccount' element = {<ManageUserAccount/>} />
                         <Route path = '/ManageBookings' element = {<ManageBookings/>} />
+                        <Route path = '/Logout' element = {<Logout/>} />
                     </Routes>
                 </div>
                 <Footer/>

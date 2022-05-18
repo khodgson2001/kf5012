@@ -98,6 +98,7 @@ app.get('/logout', function(request, response){
 	response.set('userType', {expire: Date.now()});
 	response.set('username', {expire: Date.now()});
 	console.log('cleared cookies');
+	console.log(Date.now());
 	response.redirect('http://localhost:3000/login');
 });
 
