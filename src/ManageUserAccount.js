@@ -1,11 +1,15 @@
 import React from "react";
+import { useCookies } from "react-cookie";
 
 function ManageUserAccount () {
+
+    const [cookies, setCookie] = useCookies();
+
+
     return (
         <div className="manageUserAccount">
             <h2>Account</h2>
-            <p>Name: James Tatton (Placeholder)</p>
-            <p>Email: james.tatton@norhumbria.ac.uk</p>
+            <p>Username: {cookies.username}</p>
             <button tupe = "button">Change Password</button>
             <h3>Upcoming booking</h3>
             <p>Info about upcoming booking</p>

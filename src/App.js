@@ -25,7 +25,7 @@ function App() {
                         <Route path = '/Booking' element = {<Booking/>} />
                         <Route path = '/Login' element = {<Login/>} />
                         <Route path = '/ResetPassword' element = {<ResetPassword/>} />
-                        <Route path = '/ManageAccount' element = {<ManageUserAccount/>} />
+                        <Route path = '/ManageUserAccount' element = {<ManageUserAccount/>} />
                         <Route path = '/ManageBookings' element = {<ManageBookings/>} />
                         <Route path = '/Logout' element = {<Logout/>} />
                     </Routes>
