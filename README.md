@@ -18,11 +18,15 @@ James will be working on the design of the site, and Jason will then develop the
 This project runs in 3 seperate parts:
 - API
 - Frontend
-- Database
+- MySQL Database running on port 3306 (default port)
 
-The API uses NodeJS with Express. This runs on port 9999. You will need to launch a terminal in the [folder] and first ensure you have the correct Node modules (use `node install`) and then run the command `node login.js` (the file name will be changed at some point). This will then start a local server on port 9999.
-The Frontend of this site is built with NodeJS and React. This is ran on port 3000. You will need to launch a terminal in the root directory, ensure you have the correct Node modules (use `node install`) and then run the command `npm start`. This will run a local server on port 3000.
-The Database uses MySQL. You will need to take the creation script from (insert file here), start your own local MySQL database and then run the script.
+Step 1: Start your MySQL database (this explanation presumes you have/know how to install and set up your own MySQL server)
+Step 2: If you have not done so yet, import `biscuitbulk.sql` into your MySQL database server. This should populate it with several tables, all of which contain their own insert statements.
+
+Step 3: In a terminal/command prompt window, navigate to the KF5012 folder, and then to the API folder within that.
+Step 4: Run `node install` to install the correct node modules (FYI we use the following: alert, cookie-parser, mysql2), and then run the command `node api.js`. This will then launch the API on your local server/localhost on port 9999
+
+Step 5: In another terminal/command prompt window, navigate to the KF5012 folder run `node install` again to install the modules for the front end, and then run the command `npm start` to run the React application on your localhost on port 3000.
 
 # Updating the repo
 Where possible, please do not commit directly to the main branch. Create your own branch, or use an exisiting one. This is to prevent any changes causing issues for others if they're working on the same files.

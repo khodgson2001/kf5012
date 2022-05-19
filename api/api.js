@@ -1,6 +1,5 @@
 /*
-load in modules;
-mysql, express, express-session, path
+load in modules
 */
 
 
@@ -10,7 +9,6 @@ const session = require('express-session');
 const path = require('path');
 const alert = require('alert'); 
 const cookieParser = require('cookie-parser');
-const util = require('util');
 
 
 //connect to MySQL db, currently locally ran
