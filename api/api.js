@@ -9,6 +9,8 @@ const session = require('express-session');
 const path = require('path');
 const alert = require('alert'); 
 const cookieParser = require('cookie-parser');
+const { allowedNodeEnvironmentFlags } = require('process');
+const { response } = require('express');
 
 
 //connect to MySQL db, currently locally ran
@@ -178,22 +180,58 @@ app.get('/cuts', function(request, response){
 	NOPE
 
 */
-app.get('/availability', function(request, response){
-	/*let date = request.date;
-	let time_start = request.time_start;
-	let time_end = request.time_end;
-	let booking = request.booking;
+app.post('/availability', function(request, response){
+	/*let date = request.body.date;
+	let time_start = request.body.time_start;
+	let time_end = request.body.time_end;
+	let booking = request.body.booking;
+	let staff = request.body.staffID;
 
-	connection.query('SELECT * FROM mydb.appointments WHERE date = ?', date, function(error, results){
+	connection.query('SELECT * FROM mydb.appointments WHERE date = ? AND staff_staffID = ?', [date, staff], function(error, results){
 		if (error) throw error;
 		
 		else if (results){
-			if (time_start >= results.)
+			results.every(element=>{
+				if ((time_end <= element['time_start']) || (time_start >= element['time_end'])){
+					connection.query('INSERT INTO mydb.appointments(date, time_start, time_end, staff_staffID) VALUES (?, ?, ?, ?);', [date, time_start, time_end, staff], function(error, results){
+						if (error) response.json({error : error});
+						response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staff});
+					})
+					return false;
+				} else {
+					response.json({state: 'not booked', reason: 'time unavailable'});
+				}
+			});
+		} else {
+			response.json({state: 'not booked', reason: 'error'});
 		}
-
 	});
 	*/
 	response.send('coming soon');
+});
+
+app.post('/editUser', function(request, response){
+	/*let userID = request.body.userID;
+	let fName = request.body.fName;
+	let sName = request.body.sName;
+	let email = request.body.email;
+	response.json({message: 'coming soon'});*/
+	//connection.query('UPDATE ')
+});
+
+
+app.post('/resetPassword', function(request, resposne){
+	/*let email = request.body.email;
+	let password = request.body.password;
+
+	connection.query('UPDATE * FROM mydb.users(password) WHERE username = ? VALUES (?);' [email, password], function(error, results){
+		if(error) response.json({error: error});
+		else if (results) response.json({status: 'Updated'});
+		else response.json({status: 'error'});
+	});
+	*/
+
+	response.json({message: 'coming soon'});
 });
 
 app.listen(9999);
