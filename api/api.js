@@ -112,8 +112,8 @@ app.get('/logout', function(request, response){
 
 //registration route
 app.post('/register', function(request, response){
-	let email = request.body.email;
-	let password = request.body.pwrd;
+	let email = request.body.emailReg;
+	let password = request.body.pwrdReg;
 	let fName = request.body.fName;
 	let lName = request.body.lName;
 
