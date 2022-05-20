@@ -247,16 +247,6 @@ app.post('/book', function(request,response){
 					else{ duration = time_convert(results[0]['duration']);
 					time_end = moment(date + ' ' + time_start).add(duration, 'minutes').format('HH:mm');
 					};
-				
-					/*console.log('email: ' + email);
-					console.log('staff: ' + staffID);
-					console.log('date: ' + date);
-					console.log('cut: ' + cutID);
-					console.log('duration: ' + duration);
-					console.log('start: ' + time_start);
-					console.log('end: ' + time_end);
-					console.log('customerID: ' + custID);*/
-			
 
 					connection.query('SELECT time, time_end from mydb.appointments WHERE staff_staffID = ? AND DATE(date) = ?', [staffID, date], function(error, results){
 						if(error) response.json(error);
@@ -264,17 +254,6 @@ app.post('/book', function(request,response){
 							results.every(element=>{
 								let alreadyBooked_start = moment(date + ' ' + element['time']);
 								let alreadyBooked_end = moment(date + ' ' + element['time_end']);
-								console.log('===============================================');
-								console.log('To be booked');
-								console.log(moment(date + ' ' + time_start).format());
-								console.log(moment(date + ' ' + time_end).format());
-								console.log('===============================================');
-								console.log('already booked');
-								console.log(moment(alreadyBooked_start).format());
-								console.log(moment(alreadyBooked_end).format());
-								console.log(moment(date + ' ' + time_start).isSameOrAfter(alreadyBooked_end));
-								console.log(moment(date + ' ' + time_end).isSameOrBefore(alreadyBooked_start)); //produces an error but works??
-								console.log('===============================================');
 
 								if ((moment(date + ' ' + time_end).isSameOrBefore(alreadyBooked_start)) || 
 									(moment(date + ' ' + time_start).isSameOrAfter(alreadyBooked_end))								
@@ -288,7 +267,6 @@ app.post('/book', function(request,response){
 								}
 							});
 						} else if (results) {
-							console.log('herheehe');
 							connection.query('INSERT INTO mydb.appointments(date, time, time_end, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?, ?)', [date, (time_start + ':00'), (time_end + ':00'), staffID, custID, cutID], function(error, results){
 								if (error) console.log(error);
 								response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID});
