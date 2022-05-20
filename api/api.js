@@ -203,7 +203,7 @@ app.post('/staffAvailability', function(request, response){
 });
 
 
-app.get('/book', function(request,response){
+app.post('/book', function(request,response){
 	let staffID = request.body.barbers;
 	let date = request.body.date;
 	let time_start = request.body.time;

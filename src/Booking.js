@@ -38,7 +38,7 @@ function Booking() {
     return (
         <div className='booking'>
             <div className='bookingForm'>
-                <form action = "http://localhost:9999/book" method = "GET">
+                <form action = "http://localhost:9999/book" method = "POST">
                     <div className='bookingInner'>
                     <input name = "customerID" type = "hidden" id = "customerID" value = {cookies.username}></input>
                     <label htmlFor = "barbers">Select a barber: </label>
