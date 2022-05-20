@@ -24,6 +24,9 @@ function ManageUserAccount () {
                         <label htmlFor = "sName">Your last name: </label>
                         <input name = "sName" id = "sName" type = "text"></input> 
                     </div>
+                    <div className = "manageAccountFormInner">
+                        <input value = "Submit" type = "submit" id = "submit"></input> 
+                    </div>
                 </form>
                 <div className='loginReset'>
                         <Link to='/ResetPassword'>Reset Password</Link>
