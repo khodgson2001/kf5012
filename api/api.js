@@ -9,8 +9,6 @@ const session = require('express-session');
 const path = require('path');
 const alert = require('alert'); 
 const cookieParser = require('cookie-parser');
-const { allowedNodeEnvironmentFlags } = require('process');
-const { response } = require('express');
 
 
 //connect to MySQL db, currently locally ran
@@ -44,9 +42,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
-app.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+app.use(function(request, response, next) {
+	response.header("Access-Control-Allow-Origin", "*");
+	response.header("Access-Control-Allow-Headers", "X-Requested-With");
 	next();
 	});
   
@@ -180,6 +178,22 @@ app.get('/cuts', function(request, response){
 	NOPE
 
 */
+
+app.get('/staff', function(request, response){
+	connection.query('SELECT staffID, fName, sName from mydb.staff', function(error,results){
+		if (error) response.json({error: error});
+		else if (results) response.json(results);
+		else response.json({error: 'no staff'});
+	});
+});
+
+
+/*app.post('/staffAvailability', function(request, response){
+
+
+});
+*/
+
 app.post('/availability', function(request, response){
 	/*let date = request.body.date;
 	let time_start = request.body.time_start;
@@ -207,7 +221,7 @@ app.post('/availability', function(request, response){
 		}
 	});
 	*/
-	response.send('coming soon');
+	response.json({state: 'coming soon'});
 });
 
 app.post('/editUser', function(request, response){
@@ -219,9 +233,11 @@ app.post('/editUser', function(request, response){
 	//connection.query('UPDATE ')
 });
 
+app.post('/test')
+
 
 app.post('/resetPassword', function(request, resposne){
-	/*let email = request.body.email;
+	let email = request.body.email;
 	let password = request.body.password;
 
 	connection.query('UPDATE * FROM mydb.users(password) WHERE username = ? VALUES (?);' [email, password], function(error, results){
@@ -229,7 +245,7 @@ app.post('/resetPassword', function(request, resposne){
 		else if (results) response.json({status: 'Updated'});
 		else response.json({status: 'error'});
 	});
-	*/
+	
 
 	response.json({message: 'coming soon'});
 });
