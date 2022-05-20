@@ -202,6 +202,91 @@ app.post('/staffAvailability', function(request, response){
 
 });
 
+
+app.post('/book', function(request,response){
+	let staffID = request.body.barbers;
+	let date = request.body.date;
+	let time_start = request.body.time;
+	let email = request.body.customerID;
+	let cutID = request.body.hairCuts;
+	let duration, custID, time_end;
+
+
+	console.log(email);
+	console.log(staffID);
+	console.log(date);
+	console.log(cutID);
+	console.log(duration);
+	console.log(time_start);
+	console.log(time_end);
+
+
+	/*function failed(error, inConn){ 
+		if (inConn === 0){ // if not in a connection (0)
+			console.log(error)
+			alert('Error booking. Please try again'); // client facing error
+			response.redirect('http://localhost:3000/booking'); // redirect to registration form
+			response.end();
+		}
+		if(error && inConn === 1) connection.rollback(function(){ //rollback the transaction if failed
+			throw error; //throw error
+		});
+	};
+
+	function time_convert(num){ 
+		var hours = Math.floor(num / 60);  
+		var minutes = num % 60;
+		return hours + ":" + minutes;         
+  	};
+
+	if (staffID && date && time_start && customerID){
+			connection.query(`SELECT customerID FROM mydb.customers WHERE email = ?`, [email], function(error, results){ // insert into cust table, escape strings for xtr validate
+				if (error) failed(error, 1); // run failed function
+				else custID = results[0]['customerID'];
+			});
+			connection.query(`SELECT duration FROM mydb.cuts WHERE cutID = ?`, [cutID], function(error, results){  // insert into user table, escape strings for xtr validate
+				if (error) failed(error, 1); // run reg_failed function
+				else duration = time_convert(results[0]['duration']);
+				time_end = time_start + duration;
+			});
+			
+			console.log(duration);
+			console.log(staffID);
+			console.log(date);
+			console.log(time_start);
+			console.log(email);
+			console.log(time_end);
+
+			/*
+			connection.query('SELECT * from mydb.appointments WHERE staff_staffID = ? AND date = ?', function(error, results){
+				if(error) failed(error, 1);
+				else if (results){
+					results.every(element=>{
+						if ((time_end <= element['time']) || (time_start >= (element['time'] + duration))){
+							connection.query('INSERT INTO mydb.appointments(date, time_start, time_end, staff_staffID) VALUES (?, ?, ?, ?);', [date, time_start, time_end, staff], function(error, results){
+								if (error) response.json({error : error});
+								response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staff});
+							})
+							return false;
+						} else {
+							response.json({state: 'not booked', reason: 'time unavailable'});
+						}
+					});
+				} else {
+					response.json({state: 'not booked', reason: 'error'});
+				}
+			});
+
+
+	} else {
+		
+		failed(null, 0);
+
+	}*/
+
+
+});
+
 app.post('/availability', function(request, response){
 	/*let date = request.body.date;
 	let time_start = request.body.time_start;
