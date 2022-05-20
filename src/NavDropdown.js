@@ -55,6 +55,7 @@ function NavDropdown() {
             {customerUser && <Link to = '/Booking'>Booking</Link>}
             {customerUser && <Link to = '/ManageUserAccount'>Manage Account</Link>}
             {adminUser && <Link to = '/ManageBookings'>Manage Bookings</Link>}
+            {adminUser && <Link to = '/ManageCuts'>Manage Cuts</Link>}
             {loggedIn && <a href = 'http://localhost:9999/logout'>Logout</a>}
             {!loggedIn && <Link to = '/Login'>Login</Link>}
             

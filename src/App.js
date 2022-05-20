@@ -12,6 +12,7 @@ import UserNavbarDropdown from './UserNavbarDropdown.js';
 import ManageUserAccount from './ManageUserAccount.js';
 import ManageBookings from './ManageBookings.js';
 import Logout from './Logout';
+import ManageCuts from './ManageCuts.js';
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                         <Route path = '/ManageUserAccount' element = {<ManageUserAccount/>} />
                         <Route path = '/ManageBookings' element = {<ManageBookings/>} />
                         <Route path = '/Logout' element = {<Logout/>} />
+                        <Route path = '/ManageCuts' element = {<ManageCuts/>} />
                     </Routes>
                 </div>
                 <Footer/>
