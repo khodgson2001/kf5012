@@ -1,13 +1,17 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
+import { useCookies } from "react-cookie";
 
 
 
 
 function Booking() {
 
+    const [cookies, setCookie] = useCookies();
+
     const [barbers, setBarbers] = useState(null);
 
+    const [cuts, setCuts] = useState(null);
     
     useEffect(() => {
         fetch('http://localhost:9999/staff')
@@ -17,23 +21,25 @@ function Booking() {
             .then(data => {
                 setBarbers(data);
                 console.log(data);
-                todaysDate();
             });
+        fetch('http://localhost:9999/cuts')
+            .then(res => {
+               return res.json();
+             })
+            .then(data => {
+                setCuts(data);
+                console.log(data);
+            })
     }, []);
     
-    const currentDate = new Date();
 
-    const [date, setDate] = useState();
-
-    function todaysDate() {
-        setDate(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-    }
 
 
     return (
         <div className='booking'>
             <div className='bookingForm'>
                 <form action = "http://localhost:9999/staffAvailability" method = "POST">
+                    <input type = "hidden" id = "customerID" value = {cookies.username}></input>
                     <label htmlFor = "barbers">Select a barber: </label>
                         <select name = "barbers" id = "barbers">
                             {barbers && barbers.map((barber) => (
@@ -41,8 +47,7 @@ function Booking() {
                             ))}
                         </select>
                     <label htmlFor = "dates">Select a date: </label>
-                        <input type = "date" min = {date} id="date"></input>
-                    <input type = "submit" value = "submit"></input>
+                        <input type = "date" id="date"></input>
                 </form>
             </div>
         </div>

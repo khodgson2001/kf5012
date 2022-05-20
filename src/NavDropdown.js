@@ -7,7 +7,6 @@ function NavDropdown() {
 
     const [cookies, setCookie] = useCookies();
 
-
     const [loggedIn, setLoggedIn] = useState(false);
 
     const [customerUser, setCustomerUser] = useState(false);
