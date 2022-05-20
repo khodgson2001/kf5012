@@ -351,4 +351,17 @@ app.post('/resetPassword', function(request, resposne){
 	response.json({message: 'coming soon'});
 });
 
+
+app.get('/getAppointments', function(request, response){
+
+	connection.query('SELECT * FROM mydb.appointments', function(error,results){
+		if(error) response.json(error);
+		else response.json(results);
+	})
+
+
+
+});
+
+
 app.listen(9999);
