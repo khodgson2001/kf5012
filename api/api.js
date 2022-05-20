@@ -233,89 +233,78 @@ app.post('/book', function(request,response){
   	};
 
 	if (staffID && date && time_start && email){
-			connection.query(`SELECT customerID FROM mydb.customers WHERE email = ?`, [email], function(error, results){ // insert into cust table, escape strings for xtr validate
+			connection.query(`SELECT customerID FROM mydb.customers WHERE email = ?`, [email], function(error, results){ // search customer table for customer ID
 				if (error) failed(error, 1); // run failed function
-				else {custID = results[0]['customerID'];
-				console.log(custID);}
-			
-			connection.query(`SELECT duration FROM mydb.cuts WHERE cutID = ?`, [cutID], function(error, results){  // insert into user table, escape strings for xtr validate
-				if (error) failed(error, 1); // run reg_failed function
-				else{ duration = time_convert(results[0]['duration']);
-				time_end = moment(date + ' ' + time_start).add(duration, 'minutes').format('HH:mm');
-				console.log(duration);}
-			
-				/*console.log('email: ' + email);
-				console.log('staff: ' + staffID);
-				console.log('date: ' + date);
-				console.log('cut: ' + cutID);
-				console.log('duration: ' + duration);
-				console.log('start: ' + time_start);
-				console.log('end: ' + time_end);
-				console.log('customerID: ' + custID);*/
-		
-
-				connection.query('SELECT * from mydb.appointments WHERE staff_staffID = ? AND DATE(date) = ?', [staffID, date], function(error, results){
-					if(error) response.json(error);
-					else if (results){
-						results.every(element=>{
-							console.log()
-							let alreadyBooked_start = moment(date + ' ' + element['time']);
-							let alreadyBooked_end = moment(alreadyBooked_start).add(duration, 'minutes');
-							console.log(moment(time_end).isBefore(alreadyBooked_start)); //produces an error but works??
-							console.log(moment(time_start).isAfter(alreadyBooked_end));
-							if ((moment(time_end).isBefore(alreadyBooked_start)) || (moment(time_start).isAfter(alreadyBooked_end))){
-								connection.query('INSERT INTO mydb.appointments(date, time, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?);', [date, (time_start + ':00'), staffID, custID, cutID], function(error, results){
-									if (error) console.log(error);
-									response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID});
-								})
-							} else {
-								response.json({state: 'not booked', reason: 'time unavailable'});
-							}
-						});
-					} else {
-						response.json({state: 'not booked', reason: 'error'});
-					}
-				});
-		});
-	});
-	} else {
-		
-		failed(null, 0);
-
-	}
-
-
-});
-
-app.post('/availability', function(request, response){
-	/*let date = request.body.date;
-	let time_start = request.body.time_start;
-	let time_end = request.body.time_end;
-	let booking = request.body.booking;
-	let staff = request.body.staffID;
-
-	connection.query('SELECT * FROM mydb.appointments WHERE date = ? AND staff_staffID = ?', [date, staff], function(error, results){
-		if (error) throw error;
-		
-		else if (results){
-			results.every(element=>{
-				if ((time_end <= element['time_start']) || (time_start >= element['time_end'])){
-					connection.query('INSERT INTO mydb.appointments(date, time_start, time_end, staff_staffID) VALUES (?, ?, ?, ?);', [date, time_start, time_end, staff], function(error, results){
-						if (error) response.json({error : error});
-						response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staff});
-					})
-					return false;
+				else if (typeof results[0] !== 'undefined'){ //if results aren't false
+					custID = results[0]['customerID']; // set customer ID to whatever the value is
 				} else {
-					response.json({state: 'not booked', reason: 'time unavailable'});
-				}
+					alert('There was an error getting your ID. Please try again');
+					response.redirect('http://localhost:3000/booking');
+				};
+
+				connection.query(`SELECT duration FROM mydb.cuts WHERE cutID = ?`, [cutID], function(error, results){  // search for duration
+					if (error) failed(error, 1); // run reg_failed function
+					else{ duration = time_convert(results[0]['duration']);
+					time_end = moment(date + ' ' + time_start).add(duration, 'minutes').format('HH:mm');
+					};
+				
+					/*console.log('email: ' + email);
+					console.log('staff: ' + staffID);
+					console.log('date: ' + date);
+					console.log('cut: ' + cutID);
+					console.log('duration: ' + duration);
+					console.log('start: ' + time_start);
+					console.log('end: ' + time_end);
+					console.log('customerID: ' + custID);*/
+			
+
+					connection.query('SELECT time, time_end from mydb.appointments WHERE staff_staffID = ? AND DATE(date) = ?', [staffID, date], function(error, results){
+						if(error) response.json(error);
+						else if (results && (typeof results[0] !== 'undefined')){
+							results.every(element=>{
+								let alreadyBooked_start = moment(date + ' ' + element['time']);
+								let alreadyBooked_end = moment(date + ' ' + element['time_end']);
+								console.log('===============================================');
+								console.log('To be booked');
+								console.log(moment(date + ' ' + time_start).format());
+								console.log(moment(date + ' ' + time_end).format());
+								console.log('===============================================');
+								console.log('already booked');
+								console.log(moment(alreadyBooked_start).format());
+								console.log(moment(alreadyBooked_end).format());
+								console.log(moment(date + ' ' + time_start).isSameOrAfter(alreadyBooked_end));
+								console.log(moment(date + ' ' + time_end).isSameOrBefore(alreadyBooked_start)); //produces an error but works??
+								console.log('===============================================');
+
+								if ((moment(date + ' ' + time_end).isSameOrBefore(alreadyBooked_start)) || 
+									(moment(date + ' ' + time_start).isSameOrAfter(alreadyBooked_end))								
+								){
+									connection.query('INSERT INTO mydb.appointments(date, time, time_end, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?, ?)', [date, (time_start + ':00'), (time_end + ':00'), staffID, custID, cutID], function(error, results){
+										if (error) console.log(error);
+										response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID});
+									})
+								} else {
+									response.json({state: 'not booked', reason: 'time unavailable'});
+								}
+							});
+						} else if (results) {
+							console.log('herheehe');
+							connection.query('INSERT INTO mydb.appointments(date, time, time_end, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?, ?)', [date, (time_start + ':00'), (time_end + ':00'), staffID, custID, cutID], function(error, results){
+								if (error) console.log(error);
+								response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID});
+							});
+						}
+						else {
+							response.json({state: 'not booked', reason: 'error'});
+						}
+					});
 			});
-		} else {
-			response.json({state: 'not booked', reason: 'error'});
-		}
-	});
-	*/
-	response.json({state: 'coming soon'});
+		});
+	} else {
+		failed(null, 0);
+	}
 });
+
 
 app.post('/editUser', function(request, response){
 	/*let userID = request.body.userID;
