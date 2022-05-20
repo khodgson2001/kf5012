@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.28, for macos11 (x86_64)
 --
--- Host: localhost    Database: mydb
+-- Host: 127.0.0.1    Database: mydb
 -- ------------------------------------------------------
 -- Server version	8.0.28
 
@@ -24,7 +24,8 @@ DROP TABLE IF EXISTS `appointments`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `appointments` (
   `appointmentID` int NOT NULL,
-  `date-time` datetime DEFAULT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
   `staff_staffID` int NOT NULL,
   `customers_customerID` int NOT NULL,
   `cuts_cutID` int NOT NULL,
@@ -174,4 +175,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-20 16:25:26
+-- Dump completed on 2022-05-20 17:16:09
