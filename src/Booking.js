@@ -29,11 +29,9 @@ function Booking() {
             .then(data => {
                 setCuts(data);
                 console.log(data);
-
             })
     }, []);
     
-
 
     return (
         <div className='booking'>
