@@ -206,9 +206,46 @@
     margin-left: 5%;
 }
 
+.manageBookings {
+    margin: 1%;
+    padding: 1%;
+}
 
+.manageBookings .appointments {
+    border: thin solid black;
+    margin: 2%;
+    background: linear-gradient(45deg, #c2c2c2, #696969);
+}
 
+.manageBookings .appointments p {
+    margin: 1%;
+}
 
+.manageBookings .deleteBookingForm {
+    border: thin solid black;
+    margin: 2%;
+    background: linear-gradient(45deg, #c2c2c2, #696969);
+}
+
+.manageBookings .deleteBookingForm .innerDeleteForm {
+    margin: 2%;
+    padding: 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.manageBookings .deleteBookingForm .innerDeleteForm #bookingID {
+    max-width: 40px;
+}
+
+.manageBookings .deleteBookingForm .innerDeleteForm #submit {
+    margin: 5%;
+    padding: 3%;
+    border: thin solid black;
+    border-radius: 8px;
+    font-weight: bold;
+}
 
 footer {
     font-size: 12px;
