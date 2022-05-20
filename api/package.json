@@ -11,6 +11,7 @@
   "dependencies": {
     "alert": "^5.0.10",
     "cookie-parser": "^1.4.6",
+    "moment": "^2.29.3",
     "mysql2": "^2.3.3"
   }
 }

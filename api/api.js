@@ -9,6 +9,7 @@ const session = require('express-session');
 const path = require('path');
 const alert = require('alert'); 
 const cookieParser = require('cookie-parser');
+const moment = require('moment');
 
 
 //connect to MySQL db, currently locally ran
@@ -212,18 +213,7 @@ app.post('/book', function(request,response){
 	let duration, custID, time_end;
 
 
-	console.log(email);
-	console.log(staffID);
-	console.log(date);
-	console.log(cutID);
-	console.log(duration);
-	console.log(time_start);
-	console.log(time_end);
-
-	response.json({status: 'fucked'});
-
-
-	/*function failed(error, inConn){ 
+	function failed(error, inConn){ 
 		if (inConn === 0){ // if not in a connection (0)
 			console.log(error)
 			alert('Error booking. Please try again'); // client facing error
@@ -241,23 +231,39 @@ app.post('/book', function(request,response){
 		return hours + ":" + minutes;         
   	};
 
-	if (staffID && date && time_start && customerID){
+	  function getID(email){
+		connection.query(`SELECT customerID FROM mydb.customers WHERE email = ?`, [email], function(error, results){ // insert into cust table, escape strings for xtr validate
+			if (error) failed(error, 1); // run failed function
+			else {const custID = results[0]['customerID'];}
+			console.log(custID);
+		});
+
+	  }
+
+	if (staffID && date && time_start && email){
 			connection.query(`SELECT customerID FROM mydb.customers WHERE email = ?`, [email], function(error, results){ // insert into cust table, escape strings for xtr validate
 				if (error) failed(error, 1); // run failed function
-				else custID = results[0]['customerID'];
-			});
+				else {custID = results[0]['customerID'];
+				console.log(custID);}
+			
 			connection.query(`SELECT duration FROM mydb.cuts WHERE cutID = ?`, [cutID], function(error, results){  // insert into user table, escape strings for xtr validate
 				if (error) failed(error, 1); // run reg_failed function
-				else duration = time_convert(results[0]['duration']);
-				time_end = time_start + duration;
-			});
+				else{ duration = time_convert(results[0]['duration']);
+				time_end = moment(date + ' ' + time_start).add(duration, 'minutes').format('HH:MM');
+				console.log(duration);}
 			
-			console.log(duration);
-			console.log(staffID);
-			console.log(date);
-			console.log(time_start);
-			console.log(email);
-			console.log(time_end);
+			console.log('email: ' + email);
+			console.log('staff: ' + staffID);
+			console.log('date: ' + date);
+			console.log('cut: ' + cutID);
+			console.log('duration: ' + duration);
+			console.log('start: ' + time_start);
+			console.log('end: ' + time_end);
+			console.log('customerID: ' + custID);
+		
+			response.json({status: 'fucked'});
+		});
+	});
 
 			/*
 			connection.query('SELECT * from mydb.appointments WHERE staff_staffID = ? AND date = ?', function(error, results){
@@ -279,12 +285,12 @@ app.post('/book', function(request,response){
 				}
 			});
 
-
+*/
 	} else {
 		
 		failed(null, 0);
 
-	}*/
+	}
 
 
 });
