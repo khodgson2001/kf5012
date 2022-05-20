@@ -261,23 +261,16 @@ app.post('/book', function(request,response){
 							console.log()
 							let alreadyBooked_start = moment(date + ' ' + element['time']);
 							let alreadyBooked_end = moment(alreadyBooked_start).add(duration, 'minutes');
-							console.log(alreadyBooked_start);
-							console.log(alreadyBooked_end);
-							console.log(moment(timeEnd).isBefore(alreadyBooked_start)); //produces an error but works??
-							console.log(moment)
-							//console.log(time_end < element['time']);
-							/*console.log(moment(date + ' ' + time_end).isBefore(moment(date + ' ' + element['time'])));
-							console.log(time_start > (element['time'] + duration));
-							console.log(moment(date + ' ' + time_start).isAfter(moment(date + ' ' + moment)))*/
-							/*if ((time_end <= element['time']) || (time_start >= (element['time'] + duration))){
+							console.log(moment(time_end).isBefore(alreadyBooked_start)); //produces an error but works??
+							console.log(moment(time_start).isAfter(alreadyBooked_end));
+							if ((moment(time_end).isBefore(alreadyBooked_start)) || (moment(time_start).isAfter(alreadyBooked_end))){
 								connection.query('INSERT INTO mydb.appointments(date, time, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?);', [date, (time_start + ':00'), staffID, custID, cutID], function(error, results){
 									if (error) console.log(error);
-									
+									response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID});
 								})
-								response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID});
 							} else {
 								response.json({state: 'not booked', reason: 'time unavailable'});
-							}*/
+							}
 						});
 					} else {
 						response.json({state: 'not booked', reason: 'error'});
@@ -367,7 +360,7 @@ app.get('/getCustomers', function(request, response){
 	})
 });
 
-app.post('/booking', function(request,response){
+app.post('/deleteBooking', function(request,response){
 	let bookingID = request.body.bookingID;
 	connection.query('DELETE FROM mydb.appointments WHERE appointmentID = ?', [bookingID], function(error,results){
 		if (error) {response.json(error);
