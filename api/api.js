@@ -220,6 +220,8 @@ app.post('/book', function(request,response){
 	console.log(time_start);
 	console.log(time_end);
 
+	response.json({status: 'fucked'});
+
 
 	/*function failed(error, inConn){ 
 		if (inConn === 0){ // if not in a connection (0)
