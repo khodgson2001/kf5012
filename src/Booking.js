@@ -41,7 +41,7 @@ function Booking() {
                             ))}
                         </select>
                     <label htmlFor = "dates">Select a date: </label>
-                        <input type = "date" min = {date}></input>
+                        <input type = "date" min = {date} id="date"></input>
                     <input type = "submit" value = "submit"></input>
                 </form>
             </div>

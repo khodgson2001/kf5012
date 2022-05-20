@@ -189,8 +189,11 @@ app.get('/staff', function(request, response){
 
 
 app.post('/staffAvailability', function(request, response){
-	let staffID = request.body.staffID;
+	let staffID = request.body.barbers;
 	let date = request.body.date;
+
+	console.log(staffID);
+	console.log(date);
 
 	connection.query('SELECT time from mydb.appointments WHERE staff_staffID = ? AND date = ?',[staffID, date], function(error,results){
 		if (error) response.json({error: error});
