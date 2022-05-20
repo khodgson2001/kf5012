@@ -39,6 +39,7 @@ function Booking() {
         <div className='booking'>
             <div className='bookingForm'>
                 <form action = "http://localhost:9999/staffAvailability" method = "POST">
+                    <div className='bookingInner'>
                     <input type = "hidden" id = "customerID" value = {cookies.username}></input>
                     <label htmlFor = "barbers">Select a barber: </label>
                         <select name = "barbers" id = "barbers">
@@ -46,8 +47,26 @@ function Booking() {
                                 <option value = {barber.staffID} key = {barber.staffID}>{barber.fName} {barber.sName}</option>
                             ))}
                         </select>
+                    </div>
+                    <div className='bookingInner'>
                     <label htmlFor = "dates">Select a date: </label>
                         <input type = "date" id="date"></input>
+                    </div>
+                    <div className='bookingInner'>
+                    <label htmlFor = "times">Select a time: </label>
+                        <input type = "time" id="time"></input>
+                    </div>
+                    <div className='bookingInner'>
+                    <label htmlFor = "cuts">Select a cut: </label>
+                        <select name = "hairCuts" id = "hairCuts">
+                            {cuts && cuts.map((cut) => (
+                                <option value = {cut.cutID} key = {cut.cutID}>{cut.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className='bookingInnerSubmit'>
+                        <input type = "submit" value = "Confirm Booking"></input>
+                    </div>
                 </form>
             </div>
         </div>

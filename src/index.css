@@ -51,16 +51,32 @@
     margin: 2%;
     border: solid black;
     padding: 2%;
+    background: linear-gradient(45deg, #8E8E8E, #4D4D4D);
+    border: solid black;
 
 }
 
-.booking button {
-    background: grey;
-    border: solid thin black;
-    border-radius: 5px;
-    padding: 5px;
+.booking .bookingForm{
+    border: solid black;
+}
+
+.booking .bookingForm .bookingInner{
+    
     margin-top: 2%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
+
+.booking .bookingInnerSubmit {
+    margin: 5%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 5px;
+    padding: 5%;
+}
+
 
 .login {
     margin: 2%;
