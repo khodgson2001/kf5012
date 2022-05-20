@@ -9,10 +9,26 @@ function ManageUserAccount () {
     return (
         <div className="manageUserAccount">
             <h2>Account</h2>
-            <p>Username: {cookies.username}</p>
-            <button tupe = "button">Change Password</button>
-            <h3>Upcoming booking</h3>
-            <p>Info about upcoming booking</p>
+            <div className="manageAccountForm">
+                <form action = '' method = "POST">
+                    <div className = "manageAccountFormInner">
+                        <label htmlFor = "username">Your Username: </label>
+                        <input name = "username" id = "username" type = "email" defaultValue = {cookies.username}></input>
+                    </div>
+                    <div className = "manageAccountFormInner">
+                        <label htmlFor = "password">Your password: </label>
+                        <input name = "password" id = "password" type = "password"></input>
+                    </div>
+                    <div className = "manageAccountFormInner">
+                        <label htmlFor = "sName">Your first name: </label>
+                        <input name = "fName" id = "fName" type = "text"></input>
+                    </div>
+                    <div className = "manageAccountFormInner">
+                        <label htmlFor = "sName">Your last name: </label>
+                        <input name = "sName" id = "sName" type = "text"></input> 
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
