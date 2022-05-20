@@ -188,11 +188,16 @@ app.get('/staff', function(request, response){
 });
 
 
-/*app.post('/staffAvailability', function(request, response){
+app.post('/staffAvailability', function(request, response){
+	let staffID = request.body.staffID;
+	let date = request.body.date;
 
+	connection.query('SELECT time from mydb.appointments WHERE staff_staffID = ? AND date = ?',[staffID, date], function(error,results){
+		if (error) response.json({error: error});
+		else response.json(results);
+	});
 
 });
-*/
 
 app.post('/availability', function(request, response){
 	/*let date = request.body.date;
