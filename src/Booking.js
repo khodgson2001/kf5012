@@ -29,18 +29,18 @@ function Booking() {
             .then(data => {
                 setCuts(data);
                 console.log(data);
+
             })
     }, []);
     
 
 
-
     return (
         <div className='booking'>
             <div className='bookingForm'>
-                <form action = "http://localhost:9999/staffAvailability" method = "POST">
+                <form action = "http://localhost:9999/book" method = "GET">
                     <div className='bookingInner'>
-                    <input type = "hidden" id = "customerID" value = {cookies.username}></input>
+                    <input name = "customerID" type = "hidden" id = "customerID" value = {cookies.username}></input>
                     <label htmlFor = "barbers">Select a barber: </label>
                         <select name = "barbers" id = "barbers">
                             {barbers && barbers.map((barber) => (
@@ -50,11 +50,11 @@ function Booking() {
                     </div>
                     <div className='bookingInner'>
                     <label htmlFor = "dates">Select a date: </label>
-                        <input type = "date" id="date"></input>
+                        <input name = "date" type = "date" id="date"></input>
                     </div>
                     <div className='bookingInner'>
                     <label htmlFor = "times">Select a time: </label>
-                        <input type = "time" id="time"></input>
+                        <input name = "time" type = "time" id="time"></input>
                     </div>
                     <div className='bookingInner'>
                     <label htmlFor = "cuts">Select a cut: </label>

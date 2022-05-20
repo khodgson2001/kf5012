@@ -56,25 +56,31 @@
 
 }
 
-.booking .bookingForm{
-    border: solid black;
-}
-
 .booking .bookingForm .bookingInner{
     
-    margin-top: 2%;
+    margin-top: 10%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    font-weight: bold;
 }
 
-.booking .bookingInnerSubmit {
+.booking .bookingInnerSubmit{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.booking .bookingInnerSubmit input{
     margin: 5%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     border-radius: 5px;
     padding: 5%;
+    border: thin solid black;
+    font-weight: bold;
 }
 
 
