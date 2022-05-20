@@ -22,22 +22,50 @@ function ManageCuts() {
             {cuts && cuts.map((cut) => (
                 <div className='outShell' key={cut.cutID}>
                     <div className='inShell'>
-                        <h2>{ cut.name }</h2>
+                        <h3>{ cut.name }</h3>
                         <p>{ cut.description }</p>
                         <p>Cut ID: { cut.cutID }</p>
-                        <p><b>Length:</b> { cut.hairLength }</p>
-                        <p><b>Time:</b> { cut.duration } minutes</p>
-                        <p><b>Cost:</b> £{ cut.cost }</p>
-                        <p><b>Currently available:</b> { cut.available }</p>
+                        <p>Length: { cut.hairLength }</p>
+                        <p>Time: { cut.duration } minutes</p>
+                        <p>Cost: £{ cut.cost }</p>
+                        <p>Currently available: { cut.available }</p>
                     </div>
                 </div>
             ))}
             <div className="editCutForm">
-                <h2>Edit cuts</h2>
+                <h2>Change cut values here: </h2>
+                <div className="editCutFormOuter">
+                    <p>Start by identifying the cut ID from the list above. Then change the details of the cut as you would like.</p>
                 <form action = "" method = "POST">
-                    <label htmlFor = "cutID">ID of cut: </label>
-                    <input type = "text" name = "cutID" id = "cutID"></input>
+                    <div className="editCutFormInner">
+                        <label htmlFor = "cutID">ID of cut: </label>
+                        <input type = "text" name = "cutID" id = "cutID"></input>
+                    </div>
+                    <div className="editCutFormInner">
+                        <label htmlFor = "cutName">Name of cut: </label>
+                        <input type = "text" name = "cutName" id = "cutName"></input>
+                    </div>
+                    <div className="editCutFormInner">
+                        <label htmlFor = "CutLength">Length of cut: </label>
+                        <input type = "text" name = "cutName" id = "cutName" maxLength = "40"></input>
+                    </div>
+                    <div className="editCutFormInner">
+                        <label htmlFor = "cutDuration">Duration of cut: </label>
+                        <input type = "number" name = "cutDuration" id = "cutDuration" step='15' max = '120'></input>
+                    </div>
+                    <div className="editCutFormInner">
+                        <label htmlFor = "cutCost">Cost of cut: </label>
+                        <input type = "number" name = "cutCost" id = "cutCost" max = '30'></input>
+                    </div>
+                    <div className="editCutFormInner">
+                        <label htmlFor = "cutAvailable">Availability of cut: </label>
+                        <input type = "number" name = "cutAvailable" id = "cutAvailable" min = '0' max = '1'></input>
+                    </div>
+                    <div className="editCutFormInner">
+                        <input type = "submit" value = "Submit" id = "submit"></input>
+                    </div>
                 </form>
+                </div>
             </div>
         </div>
     );
