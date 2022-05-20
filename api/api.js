@@ -358,10 +358,16 @@ app.get('/getAppointments', function(request, response){
 		if(error) response.json(error);
 		else response.json(results);
 	})
-
-
-
 });
+
+app.get('/getCustomers', function(request, response){
+
+	connection.query('SELECT * FROM mydb.customers', function(error,results){
+		if(error) response.json(error);
+		else response.json(results);
+	})
+});
+
 
 
 app.listen(9999);
