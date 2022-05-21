@@ -323,7 +323,6 @@ app.post('/manageCut', function(request, response){
 	let cutLength = request.body.cutLength;
 	let cutCost = request.body.cutCost;
 	let cutAvailability = request.body.cutAvailabile;
-a
 	connection.query('UPDATE mydb.cuts SET name = ? , duration = ?, cost = ?, available = ?, hairLength = ? WHERE cutID = ?', [cutName, cutDuration, cutCost, cutAvailability, cutLength, cutID], function(error, results){
 		if(error) console.log(error);
 		else response.redirect('http://localhost:3000/manageCuts');
