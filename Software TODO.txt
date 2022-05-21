@@ -14,6 +14,8 @@ TODO list for software
 		- First name and last name
 
 
+- Make sure email isn't already in use on Registration and manage use (H) - Kieran
+
 - Home page (L)
 	- Change the availkability to where if it isnt available it shoukdnt show
 
