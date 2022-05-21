@@ -11,7 +11,7 @@ function ManageUserAccount () {
         <div className="manageUserAccount">
             <h2>Account</h2>
             <div className="manageAccountForm">
-                <form action = '' method = "POST">
+                <form action = 'http://localhost:9999/manageUser' method = "POST">
                     <div className = "manageAccountFormInner">
                         <label htmlFor = "username">Your Username: </label>
                         <input name = "username" id = "username" type = "email" defaultValue = {cookies.username}></input>

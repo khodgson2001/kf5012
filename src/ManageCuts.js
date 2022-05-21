@@ -36,7 +36,7 @@ function ManageCuts() {
                 <h2>Change cut values here: </h2>
                 <div className="editCutFormOuter">
                     <p>Start by identifying the cut ID from the list above. Then change the details of the cut as you would like.</p>
-                <form action = "" method = "POST">
+                <form action = "http://localhost:9999/manageCuts" method = "POST">
                     <div className="editCutFormInner">
                         <label htmlFor = "cutID">ID of cut: </label>
                         <input type = "text" name = "cutID" id = "cutID"></input>

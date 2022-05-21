@@ -3,7 +3,7 @@ import React from 'react';
 function ResetPassword() {
     return(
         <div className = 'resetPassword'>
-            <form>
+            <form action = "http://localhost:9999/resetPassword" method = "POST">
                 <div className='loginForm'>
                     <h2>Reset password</h2>
                     <div className='loginFormInner'>
