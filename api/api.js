@@ -10,6 +10,7 @@ const path = require('path');
 const alert = require('alert'); 
 const cookieParser = require('cookie-parser');
 const moment = require('moment');
+const { response } = require('express');
 
 
 //connect to MySQL db, currently locally ran
@@ -268,7 +269,24 @@ app.post('/book', function(request,response){
 
 app.post('/resetPassword', function(request, resposne){
 	let email = request.body.email;
-	let password = request.body.password;
+	let currentPassword = request.body.password;
+	let newPassword = request.body.passwordNew;
+	let conf_newPassword = request.body.passwordNewConf;
+
+	if (typeof email == 'undefined' || typeof currentPassword == 'undefined' || typeof newPassword == 'undefined' || typeof conf_newPassword == 'undefined'){
+		alert('You have not entered a field, please try again.')
+	}
+	else if(newPassword != conf_newPassword){
+		alert('Your passwords do not match. Please try again');
+		response.redirect('http://localhost:3000/resetPassword');
+	}else {
+		connection.query('UPDATE mydb.users SET password = ? WHERE username = ?', [newPassword, email], function(error, results){
+			alert('Password updated');
+			response.redirect('http://localhost:3000/');
+		})
+	}
+	
+
 
 	connection.query('UPDATE * FROM mydb.users(password) WHERE username = ? VALUES (?);' [email, password], function(error, results){
 		if(error) response.json({error: error});
@@ -324,12 +342,6 @@ app.post('/manageCut', function(request, response){
 	let cutCost = request.body.cutCost;
 	let cutAvailability = request.body.cutAvailable;
 
-	console.log (cutID);
-	console.log (cutName);
-	console.log (cutDuration);
-	console.log (cutLength);
-	console.log (cutCost);
-	console.log (cutAvailability);
 	connection.query('UPDATE mydb.cuts SET name = ?, duration = ?, cost = ?, available = ?, hairLength = ? WHERE cutID = ?', [cutName, cutDuration, cutCost, cutAvailability, cutLength, cutID], function(error, results){
 		if(error) console.log(error);
 		else response.redirect('http://localhost:3000/manageCuts');
