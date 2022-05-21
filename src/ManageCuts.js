@@ -65,6 +65,9 @@ function ManageCuts() {
                         <input type = "submit" value = "Submit" id = "submit"></input>
                     </div>
                 </form>
+                <a href = "http://localhost:9999/addCut">
+                    <button>Add blank cut</button>
+                </a>
                 </div>
             </div>
         </div>

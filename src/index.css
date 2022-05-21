@@ -285,6 +285,14 @@
     color:#c91616;
 }
 
+.manageCuts .editCutForm .editCutFormOuter button{
+    margin: 2%;
+    padding: 2%;
+    border: thin solid black;
+    border-radius: 8px;
+    font-weight: bold;
+    background-color: #e49393;
+}
 
 .manageCuts .editCutForm .editCutFormInner #submit {
     margin: 2%;
