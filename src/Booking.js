@@ -58,7 +58,7 @@ function Booking() {
                     <label htmlFor = "cuts">Select a cut: </label>
                         <select name = "hairCuts" id = "hairCuts">
                             {cuts && cuts.map((cut) => (
-                                <option value = {cut.cutID} key = {cut.cutID} disabled = {(cut.available == 0) ? true : false}>{cut.name}</option>
+                                <option value = {cut.cutID} key = {cut.cutID} disabled = {(cut.available == 0) ? true : false}>{cut.name} - £{cut.cost}</option>
                             ))}
                         </select>
                     </div>

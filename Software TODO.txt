@@ -1,8 +1,6 @@
 TODO list for software
 
 - Finish booking page (H)
-	- Set flag for unavailable
-	- display price
 	- PayPal
 
 - Nav bar as an overlay rather than separate page (L)
