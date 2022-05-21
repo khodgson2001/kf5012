@@ -5,12 +5,6 @@ TODO list for software
 
 - Nav bar as an overlay rather than separate page (L)
 
-- ManageUserAccount page (H) - Kieran for route
-	- Change all data
-		- Username
-		- Password
-		- First name and last name
-
 
 - Make sure email isn't already in use on Registration and manage use (H) - Kieran
 

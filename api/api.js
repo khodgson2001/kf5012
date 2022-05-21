@@ -354,8 +354,6 @@ app.post('/manageUser', function(request, response){
 	let email = request.body.username;
 	let fName = request.body.fName;
 	let sName= request.body.sName;
-
-	console.log('test');
 	if (typeof email != 'undefined'){
 		connection.query('UPDATE mydb.customers SET fName = ?, sName = ? WHERE email = ?', [fName, sName, email], function(error, results){
 			if(error) console.log(error);
