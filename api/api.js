@@ -267,35 +267,35 @@ app.post('/book', function(request,response){
 });
 
 
-app.post('/resetPassword', function(request, resposne){
+app.post('/resetPassword', function(request, response){
 	let email = request.body.email;
 	let currentPassword = request.body.password;
 	let newPassword = request.body.passwordNew;
 	let conf_newPassword = request.body.passwordNewConf;
+
+	console.log(email);
+	console.log(currentPassword)
+	console.log(newPassword);
+	console.log(conf_newPassword);
 
 	if (typeof email == 'undefined' || typeof currentPassword == 'undefined' || typeof newPassword == 'undefined' || typeof conf_newPassword == 'undefined'){
 		alert('You have not entered a field, please try again.')
 	}
 	else if(newPassword != conf_newPassword){
 		alert('Your passwords do not match. Please try again');
-		response.redirect('http://localhost:3000/resetPassword');
-	}else {
-		connection.query('UPDATE mydb.users SET password = ? WHERE username = ?', [newPassword, email], function(error, results){
-			alert('Password updated');
-			response.redirect('http://localhost:3000/');
+	}else{
+		connection.query('SELECT userID FROM mydb.users WHERE username = ? AND password = ?', [email, currentPassword], function(error, results){
+			if(typeof results[0] === 'undefined') alert('Incorrect username or password.');
+			else {
+				connection.query('UPDATE mydb.users SET password = ? WHERE username = ?', [newPassword, email], function(error, results){
+					alert('Password updated');
+					})
+			}
 		})
+
 	}
-	
+	response.redirect('http://localhost:3000/resetPassword');
 
-
-	connection.query('UPDATE * FROM mydb.users(password) WHERE username = ? VALUES (?);' [email, password], function(error, results){
-		if(error) response.json({error: error});
-		else if (results) response.json({status: 'Updated'});
-		else response.json({status: 'error'});
-	});
-	
-
-	response.json({message: 'coming soon'});
 });
 
 
