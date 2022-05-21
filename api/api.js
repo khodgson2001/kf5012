@@ -10,7 +10,6 @@ const path = require('path');
 const alert = require('alert'); 
 const cookieParser = require('cookie-parser');
 const moment = require('moment');
-const { timeEnd } = require('console');
 
 
 //connect to MySQL db, currently locally ran
@@ -52,14 +51,14 @@ app.use(function(request, response, next) {
   
 
 
-// redirect if go to api homepage
+// api homepage for get method
 app.get('/', function(request, response) {
-	response.redirect('http://localhost:3000/kf5012');
+	response.json({title: 'Biscuit Bulk Barbering API'});
 });
 
-// http://localhost:3000/auth auth page generation
+// login route
 app.post('/auth', function(request, response) {
-	// store input
+	// store post input
 	let username = request.body.email;
 	let password = request.body.pwrd;
 
@@ -68,27 +67,23 @@ app.post('/auth', function(request, response) {
 		// Execute SQL query that'll select the account from the database based on the specified username and password
 		connection.query('SELECT * FROM mydb.users WHERE username = ? AND password = ?', [username, password], function(error, results) {
 			// If there is an issue with the query, output the error
-			console.log(results);
-			console.log();
 			if (error) throw error;
 			// If the account exists
 			if (results.length > 0) {
-				// Authenticate the user
+				// assign loggedIn cookie and username cookie
 				response.cookie('loggedin', true, {httpOnly: false});
 				response.cookie('username', username, {httpOnly: false});
-				
+				//if they're a customer, assign usertype cookie type 1
 				if (results[0]['customer_customerID']) {
 					response.cookie('userType', 1 , {httpOnly: false});
-				}
+				} // elseif they're staff, assign usertype cookie type 2
 				else if (results[0]['staff_staffID']) {
 					response.cookie('userType', 2 , {httpOnly: false});
 				}
-				else{
+				else{ // if they're neither, log to the console that they don't seem to be a user
 					console.log(username + ' does not seem to be a customer or a staff');
 				}
-
-				console.log(username + ' initial logged in at ' + Date.now());
-				response.redirect('http://localhost:3000/kf5012');
+				response.redirect('http://localhost:3000/kf5012'); // redirect to homepage once logged in
 			} else {
 				alert('Incorrect username and/or password');
 				response.redirect('http://localhost:3000/login');
@@ -105,8 +100,6 @@ app.get('/logout', function(request, response){
 	response.cookie('loggedin', '', {expire: Date.now()});
 	response.cookie('userType', '',{expire: Date.now()});
 	response.cookie('username', '',{expire: Date.now()});
-	console.log('cleared cookies');
-	console.log(Date.now());
 	response.redirect('http://localhost:3000/login');
 });
 
@@ -169,17 +162,6 @@ app.get('/cuts', function(request, response){
 	});
 });
 
-//checks availability of a specific appointment
-/*logic:
-	pass in the start (x) and length of time (y), and who (z) with
-	query DB with something like:
-		SELECT * FROM mydb.appointments WHERE staff_staffID = z;
-		
-	IF (E1 <= S2 || S1 >= E2) THEN BOOK
-	ELSE
-	NOPE
-
-*/
 
 app.get('/staff', function(request, response){
 	connection.query('SELECT staffID, fName, sName from mydb.staff', function(error,results){
@@ -293,7 +275,6 @@ app.post('/editUser', function(request, response){
 	//connection.query('UPDATE ')
 });
 
-app.post('/test')
 
 
 app.post('/resetPassword', function(request, resposne){
@@ -335,6 +316,17 @@ app.post('/deleteBooking', function(request,response){
 		response.redirect('http://localhost:3000/manageBookings');
 	}
 	});
+
+
+});
+
+
+app.post('/manageCut', function(request, response){
+
+
+});
+
+app.post('/manageUser', function(request, response){
 
 
 });
