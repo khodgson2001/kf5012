@@ -46,8 +46,8 @@ function ManageCuts() {
                         <input type = "text" name = "cutName" id = "cutName"></input>
                     </div>
                     <div className="editCutFormInner">
-                        <label htmlFor = "CutLength">Length of cut: </label>
-                        <input type = "text" name = "cutName" id = "cutName" maxLength = "40"></input>
+                        <label htmlFor = "cutLength">Length of cut: </label>
+                        <input type = "text" name = "cutLength" id = "cutLength" maxLength = "40"></input>
                     </div>
                     <div className="editCutFormInner">
                         <label htmlFor = "cutDuration">Duration of cut: </label>
