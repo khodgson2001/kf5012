@@ -266,17 +266,6 @@ app.post('/book', function(request,response){
 });
 
 
-app.post('/editUser', function(request, response){
-	/*let userID = request.body.userID;
-	let fName = request.body.fName;
-	let sName = request.body.sName;
-	let email = request.body.email;
-	response.json({message: 'coming soon'});*/
-	//connection.query('UPDATE ')
-});
-
-
-
 app.post('/resetPassword', function(request, resposne){
 	let email = request.body.email;
 	let password = request.body.password;
@@ -319,10 +308,24 @@ app.post('/deleteBooking', function(request,response){
 
 
 });
-
+app.get('/addCut', function(request,response){
+	connection.query('INSERT INTO mydb.cuts(name) VALUES (?)', ['placeholder'], function(error, results){
+		if(error) console.log(error);
+		else console.log('cut created');
+	});
+});
 
 app.post('/manageCut', function(request, response){
+	let cutID = request.body.cutID;
+	let cutName = request.body.cutName;
+	let cutDuration = request.body.cutDuration;
+	let cutCost = request.body.cutCost;
+	let cutAvailability = request.body.cutAvailabile;
 
+	if(cutID && cutName && cutDuration && cutCost && cutAvailabilty){
+
+
+	}
 
 });
 
