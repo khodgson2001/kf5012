@@ -1,5 +1,8 @@
 /* Media query inserted here for screen sozie - mobile only*/
 
+@media screen and (max-width: 415px)
+{
+
 * {
     margin: 0;
     padding: 0;
@@ -346,4 +349,5 @@ footer {
 
 footer hr {
     margin-bottom: 2%;
+}
 }
