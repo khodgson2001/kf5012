@@ -1,0 +1,32 @@
+TODO list for software
+
+- Finish booking page (H)
+	- Set flag for unavailable
+	- display price
+	- PayPal
+
+- Nav bar as an overlay rather than separate page (L)
+
+- ManageUserAccount page (H) - Kieran for route
+	- Change all data
+		- Username
+		- Password
+		- First name and last name
+
+
+- Home page (L)
+	- Change the availkability to where if it isnt available it shoukdnt show
+
+
+- Password Hash (M)
+
+- Validation on all input forms (M)
+	- required where necessary
+	-  max length
+	- data type
+	- etc
+
+- Management Tasks
+
+- Full document explaining code (Read mission)
+
