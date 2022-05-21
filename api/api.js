@@ -313,6 +313,7 @@ app.get('/addCut', function(request,response){
 		if(error) console.log(error);
 		else console.log('cut created');
 	});
+	response.redirect('http://localhost:3000/ManageCuts');
 });
 
 app.post('/manageCut', function(request, response){
@@ -321,11 +322,11 @@ app.post('/manageCut', function(request, response){
 	let cutDuration = request.body.cutDuration;
 	let cutCost = request.body.cutCost;
 	let cutAvailability = request.body.cutAvailabile;
-
-	if(cutID && cutName && cutDuration && cutCost && cutAvailabilty){
-
-
-	}
+a
+	connection.query('UPDATE mydb.cuts SET name = ? , duration = ?, cost = ?, available = ? WHERE cutID = ?', [cutName, cutDuration, cutCost, cutAvailability, cutID], function(error, results){
+		if(error) console.log(error);
+		else response.redirect('http://localhost:3000/manageCuts');
+	});
 
 });
 
