@@ -44,13 +44,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
+// fix CORS issue
 app.use(function(request, response, next) {
 	response.header("Access-Control-Allow-Origin", "*");
 	response.header("Access-Control-Allow-Headers", "X-Requested-With");
 	next();
 	});
-  
-
 
 // api homepage for get method
 app.get('/', function(request, response) {
@@ -96,26 +95,28 @@ app.post('/auth', function(request, response) {
 	}
 });
 
-//Clears all cookies
+// Clears all cookies
 app.get('/logout', function(request, response){
-	response.cookie('loggedin', '', {expire: Date.now()});
-	response.cookie('userType', '',{expire: Date.now()});
-	response.cookie('username', '',{expire: Date.now()});
+	response.cookie('loggedin', '', {expires: Date.now()}); // clear loggedin cookie and set expiry to now
+	response.cookie('userType', '',{expires: Date.now()}); // clear userType cookie and set expiry to now
+	response.cookie('username', '',{expires: Date.now()}); // clear username cookie and set expiry to now
 	response.redirect('http://localhost:3000/login');
 });
 
-//registration route
+// registration route
 app.post('/register', function(request, response){
+	// load in details from request
 	let email = request.body.emailReg;
 	let password = request.body.pwrdReg;
 	let fName = request.body.fName;
 	let lName = request.body.lName;
 
+	// error function
 	function reg_failed(error, inConn){ 
 		if (inConn === 0 && error === null){ // if not in a connection (0)
 			alert('Error registering. Please try again'); // client facing error
 			response.redirect('http://localhost:3000/register'); // redirect to registration form
-			response.end();
+			response.end(); // end response
 		}
 		if(error && inConn === 1) connection.rollback(function(){ //rollback the transaction if failed
 			throw error; //throw error
@@ -123,17 +124,14 @@ app.post('/register', function(request, response){
 		});
 	}
 
-	if (email && password && fName && lName){
+	if (email && password && fName && lName){ // if these are all set
 		var breaker = false;
-		connection.query('SELECT username FROM mydb.users WHERE username = ?', [email], function(error, results, breaker){
-			console.log(results);
-			if (results && results[0]['username'] == email) {
-				console.log('s');
-				breaker = true;
-			} else breaker = false;
+		connection.query('SELECT username FROM mydb.users WHERE username = ?', [email], function(error, results, breaker){ // select any users where the email passes
+			if (results && results[0]['username'] == email){ // if there are results and it matches the submitted email
+				breaker = true; // set breaker variable to true
+			} else breaker = false; // else set it to false
 		});
-			
-		console.log(breaker);
+
 		if(breaker == false){connection.beginTransaction(function(error){ // starts a transaction - need to do several queries, one uses the previous' insert ID as a ForeignKey in DB
 			
 			if (error) {throw error;} //throw any errors
@@ -163,39 +161,24 @@ app.post('/register', function(request, response){
 	}
 }});
 
-//Returns all available cuts in JSON format
+// Returns all available cuts in JSON format
 app.get('/cuts', function(request, response){
-	connection.query('SELECT * FROM mydb.cuts', function(error, results) {
-		if (error) throw error;
-		response.json(results);
+	connection.query('SELECT * FROM mydb.cuts', function(error, results) { // search database for all haircuts
+		if (error) console.log(error); // if errors , log them
+		response.json(results); // return json response
 	});
 });
 
-
+// Return all staff
 app.get('/staff', function(request, response){
-	connection.query('SELECT staffID, fName, sName from mydb.staff', function(error,results){
-		if (error) response.json({error: error});
-		else if (results) response.json(results);
-		else response.json({error: 'no staff'});
+	connection.query('SELECT staffID, fName, sName from mydb.staff', function(error,results){ // select all staff members from staff database
+		if (error) response.json({error: error}); // if error, return json
+		else if (results) response.json(results); // else if there are resultsm return results
+		else response.json({error: 'no staff'}); // otherwise say no staff exist
 	});
 });
 
-
-app.post('/staffAvailability', function(request, response){
-	let staffID = request.body.barbers;
-	let date = request.body.date;
-
-	console.log(staffID);
-	console.log(date);
-
-	connection.query('SELECT time from mydb.appointments WHERE staff_staffID = ? AND date = ?',[staffID, date], function(error,results){
-		if (error) response.json({error: error});
-		else response.json(results);
-	});
-
-});
-
-
+//book appointment
 app.post('/book', function(request,response){
 	let staffID = request.body.barbers;
 	let date = request.body.date;
@@ -274,7 +257,7 @@ app.post('/book', function(request,response){
 	}
 });
 
-
+// resetpassword
 app.post('/resetPassword', function(request, response){
 	let email = request.body.email;
 	let currentPassword = request.body.password;
@@ -306,7 +289,7 @@ app.post('/resetPassword', function(request, response){
 
 });
 
-
+// return all appointments
 app.get('/getAppointments', function(request, response){
 
 	connection.query('SELECT * FROM mydb.appointments', function(error,results){
@@ -315,14 +298,16 @@ app.get('/getAppointments', function(request, response){
 	})
 });
 
+// return all customers
 app.get('/getCustomers', function(request, response){
 
-	connection.query('SELECT * FROM mydb.customers', function(error,results){
-		if(error) response.json(error);
-		else response.json(results);
+	connection.query('SELECT * FROM mydb.customers', function(error,results){ // select all customer info from customer database
+		if(error) response.json(error); // if error, respond with error
+		else response.json(results); // else, return the results
 	})
 });
 
+// delete booking
 app.post('/deleteBooking', function(request,response){
 	let bookingID = request.body.bookingID;
 	connection.query('DELETE FROM mydb.appointments WHERE appointmentID = ?', [bookingID], function(error,results){
@@ -335,6 +320,7 @@ app.post('/deleteBooking', function(request,response){
 
 });
 
+// add haircut to cut list 
 app.get('/addCut', function(request,response){
 	connection.query('INSERT INTO mydb.cuts(name) VALUES (?)', ['placeholder'], function(error, results){
 		if(error) console.log(error);
@@ -343,6 +329,7 @@ app.get('/addCut', function(request,response){
 	response.redirect('http://localhost:3000/ManageCuts');
 });
 
+// edit cut info
 app.post('/manageCut', function(request, response){
 	let cutID = request.body.cutID;
 	let cutName = request.body.cutName;
@@ -358,6 +345,7 @@ app.post('/manageCut', function(request, response){
 
 });
 
+// edit user info
 app.post('/manageUser', function(request, response){
 	let email = request.body.username;
 	let fName = request.body.fName;
