@@ -5,12 +5,14 @@ TODO list for software
 
 - Nav bar as an overlay rather than separate page (L)
 
+- See current bookings on Manage Account
 
 - Make sure email isn't already in use on Registration and manage use (H) - Kieran
 
 - Home page (L)
 	- Change the availkability to where if it isnt available it shoukdnt show
 
+- comment all code
 
 - Password Hash (M)
 

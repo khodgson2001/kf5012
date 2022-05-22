@@ -59,7 +59,7 @@ function ManageBookings () {
                     <p>Appointment ID: {appointment.appointmentID}</p>
                     <p>Customer ID:{appointment.customers_customerID}</p>
                     <p>Cut ID: {appointment.cuts_cutID}</p>
-                    <p>Date:{appointment.date}</p>
+                    <p>Date:{appointment.date.substring(0,10)}</p>
                     <p>Staff ID: {appointment.staff_staffID}</p>
                     <p>Time: {appointment.time}</p>
                 </div>
