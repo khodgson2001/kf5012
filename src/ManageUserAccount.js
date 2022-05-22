@@ -43,18 +43,7 @@ function ManageUserAccount () {
                 <div className='loginReset'>
                         <Link to='/ResetPassword'>Reset Password</Link>
                 </div>
-            </div>
-            <h2>Manage Bookings</h2>
-            <div className="manageBookingsUser">
-            {appointments && appointments.map((appointment) => (
-                <div className="appointments"  key = {appointment.appointmentID}>
-                    <p>Customer ID:{appointment.customers_customerID}</p>
-                    <p>Cut ID: {appointment.cuts_cutID}</p>
-                    <p>Date:{appointment.date.substring(0,10)}</p>
-                    <p>Staff ID: {appointment.staff_staffID}</p>
-                    <p>Time: {appointment.time}</p>
-                </div>
-            ))}
+                <p>To cancel your booking, contact Jon Doe: JonDoe26@email.com</p>
             </div>
         </div>
     );
