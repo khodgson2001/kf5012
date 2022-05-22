@@ -119,21 +119,31 @@ app.post('/register', function(request, response){
 		}
 		if(error && inConn === 1) connection.rollback(function(){ //rollback the transaction if failed
 			throw error; //throw error
+			
 		});
 	}
 
 	if (email && password && fName && lName){
-		connection.beginTransaction(function(error){ // starts a transaction - need to do several queries, one uses the previous' insert ID as a ForeignKey in DB
+		var breaker = false;
+		connection.query('SELECT username FROM mydb.users WHERE username = ?', [email], function(error, results, breaker){
+			console.log(results);
+			if (results && results[0]['username'] == email) {
+				console.log('s');
+				breaker = true;
+			} else breaker = false;
+		});
+			
+		console.log(breaker);
+		if(breaker == false){connection.beginTransaction(function(error){ // starts a transaction - need to do several queries, one uses the previous' insert ID as a ForeignKey in DB
 			
 			if (error) {throw error;} //throw any errors
-			
 			connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [email, fName, lName], function(error, results){ // insert into cust table, escape strings for xtr validate
 				reg_failed(error, 1); // run reg_failed function
 				
 				let custID = results.insertId; // set custID var as the previous insertID, used in next query
 				
 				connection.query(`INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, ?);`, [email, password, custID], function(error){  // insert into user table, escape strings for xtr validate
-					reg_failed(error, 1); // ruun reg_failed function
+					reg_failed(error, 1); // run reg_failed function
 
 					connection.commit(function(error){ // commit the transaction
 						reg_failed(error, 1); // run reg_failed function
@@ -148,12 +158,10 @@ app.post('/register', function(request, response){
 		});
 
 	} else {
-		
 		reg_failed(null, 0);
 
 	}
-});
-
+}});
 
 //Returns all available cuts in JSON format
 app.get('/cuts', function(request, response){

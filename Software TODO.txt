@@ -7,7 +7,7 @@ TODO list for software
 
 - See current bookings on Manage Account
 
-- Make sure email isn't already in use on Registration and manage use (H) - Kieran
+- Make sure email isn't already in use on Registration (H) - Kieran
 
 - Home page (L)
 	- Change the availkability to where if it isnt available it shoukdnt show
