@@ -25,11 +25,13 @@ function Home() {
                     
                     <div className='innerContent'>
                         <img src = {availablity.img}/>
+                        <div className='otherCutContent'>
                         <h2>{ availablity.name }</h2>
                         <p>{ availablity.description }</p>
                         <p><b>Length:</b> { availablity.hairLength }</p>
                         <p><b>Time:</b> { availablity.duration } minutes</p>
                         <p><b>Cost:</b> £{ availablity.cost }</p>
+                        </div>
                     </div>
                 
                 );
@@ -37,7 +39,9 @@ function Home() {
         else
             {
                 return (
-                    <h2>The "{availablity.name}" service is unavailable at this time</h2>
+                    <div  className='notAvailable'>
+                    <h2>The <b>{availablity.name}</b> service is unavailable at this time</h2>
+                    </div>
                 );
             }
     };
@@ -50,7 +54,7 @@ function Home() {
                 <div className='outerShell' key={cut.cutID}>
                 {availabilityCheck(cut)}
                 </div>
-             ))};
+             ))}
         </div>
     )
 }

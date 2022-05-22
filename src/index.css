@@ -192,10 +192,24 @@
     justify-content: space-evenly;
 }
 
-.home .outerShell img {
+.home .innerContent {
+    display: flex;
+    align-items: center;
+}
+
+
+.home .innerContent img {
     width: 50%;
     border-radius: 5px;
     border: thin solid black;
+}
+
+.home .outerShell .notAvailable{
+    text-align: center;
+}
+
+.home .outerShell h2 b{
+    color: #c91616;
 }
 
 .home .innerContent h2{
