@@ -1,5 +1,6 @@
 TODO list for software
 
+
 - Finish booking page (H)
 	- PayPal
 
@@ -11,6 +12,7 @@ TODO list for software
 
 - Home page (L)
 	- Change the availkability to where if it isnt available it shoukdnt show
+	- watch the net ninja stuff on the JSON fetch etc to better understand this issue
 
 - comment all code
 
