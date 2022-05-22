@@ -16,34 +16,43 @@ function Home() {
             });
     }, []);
 
-    function availabilityCheck(availablity) {
-        if(availablity == 1)
+
+    //Funcitonality works but gives an error in the console
+    function availabilityCheck(availablity, pos) {
+        if(availablity.available == 1)
             {
-                return "Yes";
+                return (
+                    
+                    <div className='innerContent'>
+                        <img src = {availablity.img}/>
+                        <h2>{ availablity.name }</h2>
+                        <p>{ availablity.description }</p>
+                        <p><b>Length:</b> { availablity.hairLength }</p>
+                        <p><b>Time:</b> { availablity.duration } minutes</p>
+                        <p><b>Cost:</b> £{ availablity.cost }</p>
+                    </div>
+                
+                );
             }
         else
             {
-                return "No";
+                return (
+                    <h2>The "{availablity.name}" service is unavailable at this time</h2>
+                );
             }
     };
 
+
+
     return(
         <div className='home'>
-             {cuts && cuts.map((cut) => (
+            {cuts && cuts.map((cut) => (
                 <div className='outerShell' key={cut.cutID}>
-                    <img src = {cut.img}/>
-                    <div className='innerContent'>
-                        <h2>{ cut.name }</h2>
-                        <p>{ cut.description }</p>
-                        <p><b>Length:</b> { cut.hairLength }</p>
-                        <p><b>Time:</b> { cut.duration } minutes</p>
-                        <p><b>Cost:</b> £{ cut.cost }</p>
-                        <p><b>Currently available:</b> { availabilityCheck(cut.available) }</p>
-                    </div>
+                {availabilityCheck(cut)}
                 </div>
-            ))}
+             ))};
         </div>
-    );
+    )
 }
 
 export default Home;
