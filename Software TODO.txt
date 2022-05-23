@@ -31,3 +31,4 @@ TODO list for software
 
 - Testing + Test plan
 
+- booked - redirect and alert
