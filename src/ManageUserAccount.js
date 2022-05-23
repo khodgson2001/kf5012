@@ -52,6 +52,9 @@ function ManageUserAccount () {
                 </div>
                 <p className='textAlign'>To cancel your booking, contact Jon Doe: JonDoe26@email.com</p>
             </div>
+            <div className='bookingInnerSubmit'>
+                <h2>My Current Bookings</h2>
+            </div>
         </div>
     );
 }
