@@ -4,6 +4,8 @@ TODO list for software
 - Finish booking page (H)
 	- PayPal
 
+-Change image - manage cuts - K to update route, J to implement on F/E
+
 - Nav bar as an overlay rather than separate page (L)
 
 - See current bookings on Manage Account - K set up route
@@ -23,6 +25,18 @@ TODO list for software
 	- etc
 
 - Management Tasks
+	
+	•	The original Website Proposal (due week 4) DONE
+	•	Team Code of Conduct DONE *review this*
+	•	Skills audit of the team (due week 4) DONE
+	•	Risk analysis DONE *review this*
+	•	Work breakdown, task prioritisation and task allocation
+		OG deadline for finishing 9/5/22, extended to 23/5/22
+		Change of missions on 19th
+		
+	•	Schedule with agreed deadlines, including initial version and ongoing revisions
+	•	Ongoing logs of progress, problems and solutions.
+	•	Records of communication pertaining to decisions by the group
 
 - Full document explaining code (Read mission)
 
