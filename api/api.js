@@ -126,12 +126,12 @@ app.post('/register', function(request, response){
 		   if (error) {reg_failed(error, 1);} //throw any errors
 		   connection.query(`SELECT userID FROM users WHERE username = ?`, [email], function(error, results){ 
 			   if(typeof results[0] === 'undefined'){
-				connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [email, fName, lName], function(error, results){ // insert into cust table, escape strings for xtr validate
+				connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [email, fName, lName], function(error, results){ // insert into cust table
 					reg_failed(error, 1); // run reg_failed function
 					
 					let custID = results.insertId; // set custID var as the previous insertID, used in next query
 					
-					connection.query(`INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, ?);`, [email, password, custID], function(error){  // insert into user table, escape strings for xtr validate
+					connection.query(`INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, ?);`, [email, password, custID], function(error){  // insert into user table
 						reg_failed(error, 1); // ruun reg_failed function
 						connection.commit(function(error){ // commit the transaction
 							reg_failed(error, 1); // run reg_failed function
