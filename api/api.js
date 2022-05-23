@@ -97,9 +97,9 @@ app.post('/auth', function(request, response) {
 
 // Clears all cookies
 app.get('/logout', function(request, response){
-	response.cookie('loggedin', '', {expires: Date.now()}); // clear loggedin cookie and set expiry to now
-	response.cookie('userType', '',{expires: Date.now()}); // clear userType cookie and set expiry to now
-	response.cookie('username', '',{expires: Date.now()}); // clear username cookie and set expiry to now
+	response.cookie('loggedin', '', {expire: Date.now()}); // clear loggedin cookie and set expiry to now
+	response.cookie('userType', '',{expire: Date.now()}); // clear userType cookie and set expiry to now
+	response.cookie('username', '',{expire: Date.now()}); // clear username cookie and set expiry to now
 	response.redirect('http://localhost:3000/login');
 });
 
@@ -115,27 +115,36 @@ app.post('/register', function(request, response){
 	function reg_failed(error, inConn){ 
 		if (inConn === 0 && error === null){ // if not in a connection (0)
 			alert('Error registering. Please try again'); // client facing error
-			response.redirect('http://localhost:3000/register'); // redirect to registration form
+			response.redirect('http://localhost:3000/Login'); // redirect to registration form
 			response.end(); // end response
 		}
-		if(error && inConn === 1) connection.rollback(function(){ //rollback the transaction if failed
-			throw error; //throw error
+		if(inConn === 1) 
+			connection.rollback(function(){ //rollback the transaction if failed
+			console.log(error); //throw error
+			alert('Error registering. Please try again'); // client facing error
+			response.redirect('http://localhost:3000/Login'); // redirect to registration form
+			response.end(); // end response
 			
 		});
 	}
 
 	if (email && password && fName && lName){ // if these are all set
 		var breaker = false;
-		connection.query('SELECT username FROM mydb.users WHERE username = ?', [email], function(error, results, breaker){ // select any users where the email passes
-			if (results && results[0]['username'] == email){ // if there are results and it matches the submitted email
-				breaker = true; // set breaker variable to true
-			} else breaker = false; // else set it to false
-		});
 
-		if(breaker == false){connection.beginTransaction(function(error){ // starts a transaction - need to do several queries, one uses the previous' insert ID as a ForeignKey in DB
+		connection.beginTransaction(function(error){ // starts a transaction - need to do several queries, one uses the previous' insert ID as a ForeignKey in DB
 			
 			if (error) {throw error;} //throw any errors
-			connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [email, fName, lName], function(error, results){ // insert into cust table, escape strings for xtr validate
+			console.log()
+
+			connection.query('SELECT username FROM mydb.users WHERE username = ?', [email], function(error, results){ // select any users where the email passes
+				console.log(results);
+				if (!(results && results[0] == '[]')){ // if there are no results
+					breaker = true; // set breaker variable to true
+				} else {
+					breaker = false; // else set it to false
+					}
+			});
+			if (breaker == true) {connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [email, fName, lName], function(error, results){ // insert into cust table, escape strings for xtr validate
 				reg_failed(error, 1); // run reg_failed function
 				
 				let custID = results.insertId; // set custID var as the previous insertID, used in next query
@@ -153,13 +162,16 @@ app.post('/register', function(request, response){
 					});
 				});
 			});
+		} else{
+			reg_failed(error, 1);
+		}
 		});
 
 	} else {
 		reg_failed(null, 0);
 
 	}
-}});
+});
 
 // Returns all available cuts in JSON format
 app.get('/cuts', function(request, response){
