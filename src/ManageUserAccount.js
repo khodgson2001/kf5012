@@ -14,7 +14,7 @@ function ManageUserAccount () {
 
     //Fetching JSON data upon first render
     useEffect(() => {
-        fetch('http://localhost:9999/getAppointments')
+        fetch('http://localhost:9999/getAppointments/'+cookies.username)
             .then(res => {
                 return res.json();
             })
@@ -54,6 +54,15 @@ function ManageUserAccount () {
             </div>
             <div className='bookingInnerSubmit'>
                 <h2>My Current Bookings</h2>
+                {appointments && appointments.map((appointment) => (
+                <div className="appointments"  key = {appointment.appointmentID}>
+                    <p>Appointment ID: {appointment.appointmentID}</p>
+                    <p>Date:{appointment.date.substring(0,10)}</p>
+                    <p>Time start: {appointment.time}</p>
+                    <p>Time end: {appointment.time_end}</p>
+                    <p>Barber: {appointment.fName} {appointment.sName}</p>
+                </div>
+                ))}
             </div>
         </div>
     );
