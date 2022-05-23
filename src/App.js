@@ -13,6 +13,7 @@ import ResetPassword from './ResetPassword.js';
 import ManageUserAccount from './ManageUserAccount.js';
 import ManageBookings from './ManageBookings.js';
 import ManageCuts from './ManageCuts.js';
+import Payment from './Payment.js'
 
 function App() {
     /*The router element surrounds the entire application. 
@@ -33,6 +34,7 @@ function App() {
                         <Route path = '/ManageUserAccount' element = {<ManageUserAccount/>} />
                         <Route path = '/ManageBookings' element = {<ManageBookings/>} />
                         <Route path = '/ManageCuts' element = {<ManageCuts/>} />
+                        <Route path = '/Payment' element = {<Payment/>} />
                     </Routes>
                 </div>
                 <Footer/>

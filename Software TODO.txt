@@ -6,7 +6,6 @@ TODO list for software
 
 - Nav bar as an overlay rather than separate page (L)
 
-- See current bookings on Manage Account 
 
 - Password Hash (M)
 

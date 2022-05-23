@@ -4,13 +4,22 @@ import { useCookies } from "react-cookie";
 //Importing the Link, that links with the routes from the home page, from the router dom
 import { Link } from 'react-router-dom';
 
+
+
 function ManageUserAccount () {
 
+    //Payment stuff
+
+    
+
+
+    
     //Getting cookies
     const [cookies, setCookie] = useCookies();
 
     //const holding JSON dats for appointments
     const [appointments, getAppointments] = useState(null);
+
 
     //Fetching JSON data upon first render
     useEffect(() => {
@@ -24,7 +33,15 @@ function ManageUserAccount () {
             })
     }, []);
 
-    
+
+   let price;
+
+   let appoint;
+
+   let cutname;
+
+
+   
 
     return (
         <div className="manageUserAccount">
@@ -64,6 +81,11 @@ function ManageUserAccount () {
                     <p>Cut type: {appointment.name}</p>
                     <p>Paid: {appointment.paid}</p>
                     <p>Cost: £{appointment.cost}</p>
+                    <div className='paymentButtons'>
+                    <Link to="/Payment" state={[appointment.cost + ';' + appointment.appointmentID + ';' + appointment.name]}>Pay Now</Link>
+                    </div>
+
+                    
                 </div>
                 ))}
             </div>
