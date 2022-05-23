@@ -30,13 +30,14 @@ TODO list for software
 	•	Team Code of Conduct DONE *review this*
 	•	Skills audit of the team (due week 4) DONE
 	•	Risk analysis DONE *review this*
-	•	Work breakdown, task prioritisation and task allocation
-		OG deadline for finishing 9/5/22, extended to 23/5/22
-		Change of missions on 19th
-		
-	•	Schedule with agreed deadlines, including initial version and ongoing revisions
-	•	Ongoing logs of progress, problems and solutions.
-	•	Records of communication pertaining to decisions by the group
+	•	Work breakdown, task prioritisation and task allocation DONE
+			OG deadline for finishing 9/5/22, extended to 23/5/22
+			Change of missions on 19th
+			29/4/22 - extension applied for and approved on 6/5/22
+
+	•	Schedule with agreed deadlines, including initial version and ongoing revisions DONE
+	•	Ongoing logs of progress, problems and solutions. DONE ISH
+	•	Records of communication pertaining to decisions by the group DONE ISH
 
 - Full document explaining code (Read mission)
 
