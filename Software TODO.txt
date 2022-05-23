@@ -4,13 +4,9 @@ TODO list for software
 - Finish booking page (H)
 	- PayPal
 
--Change image - manage cuts - K to update route
-
 - Nav bar as an overlay rather than separate page (L)
 
-- See current bookings on Manage Account - K set up route
-
-- Make sure email isn't already in use on Registration (H) - Kieran
+- See current bookings on Manage Account 
 
 - Password Hash (M)
 

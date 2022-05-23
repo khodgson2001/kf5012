@@ -287,8 +287,8 @@ app.get('/getAppointments', function(request, response){
 
 // return specific cust appointments
 app.get('/getAppointments/:custEmail', function(request, response){
-	let custEmail = request.params.custEmail;
-	connection.query('SELECT mydb.appointments.appointmentID, mydb.appointments.date, mydb.appointments.time, mydb.appointments.time_end, mydb.staff.fName, mydb.staff.sName FROM mydb.appointments INNER JOIN mydb.customers ON mydb.appointments.customers_customerID = mydb.customers.customerID INNER JOIN mydb.staff ON mydb.appointments.staff_staffID = mydb.staff.staffID WHERE mydb.customers.email = ?', [custEmail], function(error,results){
+	let custEmail = request.params.custEmail; // use custEmail from url parameters
+	connection.query('SELECT mydb.appointments.appointmentID, mydb.appointments.date, mydb.appointments.time, mydb.appointments.time_end, mydb.staff.fName, mydb.staff.sName FROM mydb.appointments INNER JOIN mydb.customers ON mydb.appointments.customers_customerID = mydb.customers.customerID INNER JOIN mydb.staff ON mydb.appointments.staff_staffID = mydb.staff.staffID WHERE mydb.customers.email = ?', [custEmail], function(error,results){ // tldr = select appointment info based on username param passed in
 		if(error) response.json(error);
 		else response.json(results);
 	})
