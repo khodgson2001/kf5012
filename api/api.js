@@ -183,7 +183,7 @@ app.post('/book', function(request,response){
 		if (inConn === 0){ // if not in a connection (0)
 			console.log(error)
 			alert('Error booking. Please try again'); // client facing error
-			response.redirect('http://localhost:3000/booking'); // redirect to registration form
+			response.redirect('http://localhost:3000/Booking'); // redirect to registration form
 		}
 		if(error && inConn === 1) connection.rollback(function(){ //rollback the transaction if failed
 			throw error; //throw error
@@ -224,20 +224,24 @@ app.post('/book', function(request,response){
 								){
 									connection.query('INSERT INTO mydb.appointments(date, time, time_end, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?, ?)', [date, (time_start + ':00'), (time_end + ':00'), staffID, custID, cutID], function(error, results){ // insert into booked
 										if (error) console.log(error);
-										response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID}); // return that its been booked
+											alert('Appointment booked. See manage account for more details.')
+											response.redirect('http://localhost:3000/Booking'); // return that its been booked
 									})
 								} else {
-									response.json({state: 'not booked', reason: 'time unavailable'}); // return that it is not booked
+									alert('Unable to make booking, time already booked, please try again.');
+									response.redirect('http://localhost:3000/Booking'); 
 								}
 							});
 						} else if (results) { // if there are results but they do not fit into the above timeframe
 							connection.query('INSERT INTO mydb.appointments(date, time, time_end, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?, ?)', [date, (time_start + ':00'), (time_end + ':00'), staffID, custID, cutID], function(error, results){ // insert into db
 								if (error) console.log(error);
-								response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID});
+								alert('Appointment booked. See manage account for more details.')
+								response.redirect('http://localhost:3000/Booking');
 							});
 						}
 						else {
-							response.json({state: 'not booked', reason: 'error'});
+							alert('Unable to make booking, please try again.');
+							response.redirect('http://localhost:3000/Booking');
 						}
 					});
 			});
