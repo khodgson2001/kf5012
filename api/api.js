@@ -3,29 +3,30 @@ load in modules
 */
 
 
-const mysql = require('mysql2');
+const mysql = require('mysql2'); // mysql library being used
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const alert = require('alert'); 
-const cookieParser = require('cookie-parser');
-const moment = require('moment');
+const alert = require('alert');  // popup notifications
+const cookieParser = require('cookie-parser'); // cookie reading
+const moment = require('moment'); // time library
 const { response } = require('express');
 
 
 //connect to MySQL db, currently locally ran
 const connection = mysql.createConnection({
-	host     : 'localhost',
+	host     : 'localhost', // set to own host if hosting elsewhere - current port is 3306
 	user     : 'root',
 	password : 'password',
-	database : 'mydb'
+	database : 'mydb' // leave as mydb
 });
 
 //intialize express
 const app = express();
 
-app.use(cookieParser());
+app.use(cookieParser()); // use cookie parser
 
+// get stored cookies
 function getCookie(request){
 	let cookie = request.headers.cookie;
 	return cookie.split('; ');
@@ -34,17 +35,16 @@ function getCookie(request){
 
 //create session variables
 app.use(session({
-	secret: 'secret',
+	secret: 'secret', //session secret
 	resave: true,
 	saveUninitialized: true
 }));
 
-// ???
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
-// fix CORS issue
+// fixes CORS issue that occasionally occurs
 app.use(function(request, response, next) {
 	response.header("Access-Control-Allow-Origin", "*");
 	response.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -90,7 +90,7 @@ app.post('/auth', function(request, response) {
 			}			
 		});
 	} else {
-		response.send('Please enter Username and Password!');
+		alert('Please enter Username and Password!');
 		response.redirect('http://localhost:3000/login');
 	}
 });
@@ -105,12 +105,13 @@ app.get('/logout', function(request, response){
 
 // registration route - cannot handle duplicate emails right now
 app.post('/register', function(request, response){
+	// get post input
 	let email = request.body.emailReg;
 	let password = request.body.pwrdReg;
 	let fName = request.body.fName;
 	let lName = request.body.lName;
 
-   function reg_failed(error, inConn){ 
+   function reg_failed(error, inConn){ // function to run if there is any errors, DRY 
 	   if (inConn === 0 && error === null){ // if not in a connection (0)
 		   alert('Error registering. Please try again'); // client facing error
 		   response.redirect('http://localhost:3000/register'); // redirect to registration form
@@ -120,10 +121,10 @@ app.post('/register', function(request, response){
 		   throw error; //throw error
 	   });
    }
-   if (email && password && fName && lName){
+   if (email && password && fName && lName){ // if these are set
 	   connection.beginTransaction(function(error){ // starts a transaction - need to do several queries, one uses the previous' insert ID as a ForeignKey in DB
 		   
-		   if (error) {throw error;} //throw any errors
+		   if (error) {reg_failed(error, 1);} //throw any errors
 		   
 		   connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [email, fName, lName], function(error, results){ // insert into cust table, escape strings for xtr validate
 			   reg_failed(error, 1); // run reg_failed function
@@ -167,6 +168,7 @@ app.get('/staff', function(request, response){
 
 //book appointment
 app.post('/book', function(request,response){
+	// store post variables
 	let staffID = request.body.barbers;
 	let date = request.body.date;
 	let time_start = request.body.time;
@@ -175,7 +177,7 @@ app.post('/book', function(request,response){
 	let duration, custID, time_end;
 
 
-	function failed(error, inConn){ 
+	function failed(error, inConn){ //failed function, DRY
 		if (inConn === 0){ // if not in a connection (0)
 			console.log(error)
 			alert('Error booking. Please try again'); // client facing error
@@ -187,48 +189,48 @@ app.post('/book', function(request,response){
 		});
 	};
 
-	function time_convert(num){ 
+	function time_convert(num){  // func to convert minutes into hours and minutes
 		var hours = Math.floor(num / 60);  
 		var minutes = num % 60;
 		return hours + ":" + minutes;         
   	};
 
-	if (staffID && date && time_start && email){
+	if (staffID && date && time_start && email){ // if these are entered
 			connection.query(`SELECT customerID FROM mydb.customers WHERE email = ?`, [email], function(error, results){ // search customer table for customer ID
 				if (error) failed(error, 1); // run failed function
 				else if (typeof results[0] !== 'undefined'){ //if results aren't false
 					custID = results[0]['customerID']; // set customer ID to whatever the value is
 				} else {
-					alert('There was an error getting your ID. Please try again');
-					response.redirect('http://localhost:3000/booking');
+					alert('There was an error getting your ID. Please try again'); // send error alert
+					response.redirect('http://localhost:3000/booking'); // redirect to booking page
 				};
 
 				connection.query(`SELECT duration FROM mydb.cuts WHERE cutID = ?`, [cutID], function(error, results){  // search for duration
 					if (error) failed(error, 1); // run reg_failed function
-					else{ duration = time_convert(results[0]['duration']);
-					time_end = moment(date + ' ' + time_start).add(duration, 'minutes').format('HH:mm');
+					else{ duration = time_convert(results[0]['duration']); // turn duration into a timestamp
+					time_end = moment(date + ' ' + time_start).add(duration, 'minutes').format('HH:mm'); // use moment to create a date from it
 					};
 
 					connection.query('SELECT time, time_end from mydb.appointments WHERE staff_staffID = ? AND DATE(date) = ?', [staffID, date], function(error, results){
-						if(error) response.json(error);
-						else if (results && (typeof results[0] !== 'undefined')){
-							results.every(element=>{
-								let alreadyBooked_start = moment(date + ' ' + element['time']);
-								let alreadyBooked_end = moment(date + ' ' + element['time_end']);
+						if(error) response.json(error); // return errors
+						else if (results && (typeof results[0] !== 'undefined')){ // if there are results and they are set
+							results.every(element=>{ // for every result
+								let alreadyBooked_start = moment(date + ' ' + element['time']); // moment date
+								let alreadyBooked_end = moment(date + ' ' + element['time_end']); // moment date
 
 								if ((moment(date + ' ' + time_end).isSameOrBefore(alreadyBooked_start)) || 
-									(moment(date + ' ' + time_start).isSameOrAfter(alreadyBooked_end))								
+									(moment(date + ' ' + time_start).isSameOrAfter(alreadyBooked_end))			// if to ensure no clashing					
 								){
-									connection.query('INSERT INTO mydb.appointments(date, time, time_end, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?, ?)', [date, (time_start + ':00'), (time_end + ':00'), staffID, custID, cutID], function(error, results){
+									connection.query('INSERT INTO mydb.appointments(date, time, time_end, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?, ?)', [date, (time_start + ':00'), (time_end + ':00'), staffID, custID, cutID], function(error, results){ // insert into booked
 										if (error) console.log(error);
-										response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID});
+										response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID}); // return that its been booked
 									})
 								} else {
-									response.json({state: 'not booked', reason: 'time unavailable'});
+									response.json({state: 'not booked', reason: 'time unavailable'}); // return that it is not booked
 								}
 							});
-						} else if (results) {
-							connection.query('INSERT INTO mydb.appointments(date, time, time_end, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?, ?)', [date, (time_start + ':00'), (time_end + ':00'), staffID, custID, cutID], function(error, results){
+						} else if (results) { // if there are results but they do not fit into the above timeframe
+							connection.query('INSERT INTO mydb.appointments(date, time, time_end, staff_staffID, customers_customerID, cuts_cutID) VALUES (?, ?, ?, ?, ?, ?)', [date, (time_start + ':00'), (time_end + ':00'), staffID, custID, cutID], function(error, results){ // insert into db
 								if (error) console.log(error);
 								response.json({state: 'booked', date: date, time_start: time_start, time_end: time_end, staff: staffID});
 							});
@@ -246,26 +248,23 @@ app.post('/book', function(request,response){
 
 // resetpassword
 app.post('/resetPassword', function(request, response){
+	// get post variables
 	let email = request.body.email;
 	let currentPassword = request.body.password;
 	let newPassword = request.body.passwordNew;
 	let conf_newPassword = request.body.passwordNewConf;
 
-	console.log(email);
-	console.log(currentPassword)
-	console.log(newPassword);
-	console.log(conf_newPassword);
 
-	if (typeof email == 'undefined' || typeof currentPassword == 'undefined' || typeof newPassword == 'undefined' || typeof conf_newPassword == 'undefined'){
+	if (typeof email == 'undefined' || typeof currentPassword == 'undefined' || typeof newPassword == 'undefined' || typeof conf_newPassword == 'undefined'){ // if any are undefined
 		alert('You have not entered a field, please try again.')
 	}
-	else if(newPassword != conf_newPassword){
+	else if(newPassword != conf_newPassword){ // if the old and new password do not match
 		alert('Your passwords do not match. Please try again');
 	}else{
-		connection.query('SELECT userID FROM mydb.users WHERE username = ? AND password = ?', [email, currentPassword], function(error, results){
-			if(typeof results[0] === 'undefined') alert('Incorrect username or password.');
+		connection.query('SELECT userID FROM mydb.users WHERE username = ? AND password = ?', [email, currentPassword], function(error, results){ // check DB to ensure that username and password match
+			if(typeof results[0] === 'undefined') alert('Incorrect username or password.'); // if results do not match
 			else {
-				connection.query('UPDATE mydb.users SET password = ? WHERE username = ?', [newPassword, email], function(error, results){
+				connection.query('UPDATE mydb.users SET password = ? WHERE username = ?', [newPassword, email], function(error, results){ // otherwise insert
 					alert('Password updated');
 					})
 			}
@@ -296,8 +295,9 @@ app.get('/getCustomers', function(request, response){
 
 // delete booking
 app.post('/deleteBooking', function(request,response){
+	//get post variables
 	let bookingID = request.body.bookingID;
-	connection.query('DELETE FROM mydb.appointments WHERE appointmentID = ?', [bookingID], function(error,results){
+	connection.query('DELETE FROM mydb.appointments WHERE appointmentID = ?', [bookingID], function(error,results){ // remove appt
 		if (error) {response.json(error);
 		} else {alert('Booking has been cancelled.');
 		response.redirect('http://localhost:3000/manageBookings');
@@ -307,7 +307,7 @@ app.post('/deleteBooking', function(request,response){
 
 });
 
-// add haircut to cut list 
+// add haircut to cut table 
 app.get('/addCut', function(request,response){
 	connection.query('INSERT INTO mydb.cuts(name) VALUES (?)', ['placeholder'], function(error, results){
 		if(error) console.log(error);
@@ -318,6 +318,7 @@ app.get('/addCut', function(request,response){
 
 // edit cut info
 app.post('/manageCut', function(request, response){
+	// get post variables
 	let cutID = request.body.cutID;
 	let cutName = request.body.cutName;
 	let cutDuration = request.body.cutDuration;
@@ -325,7 +326,7 @@ app.post('/manageCut', function(request, response){
 	let cutCost = request.body.cutCost;
 	let cutAvailability = request.body.cutAvailable;
 
-	connection.query('UPDATE mydb.cuts SET name = ?, duration = ?, cost = ?, available = ?, hairLength = ? WHERE cutID = ?', [cutName, cutDuration, cutCost, cutAvailability, cutLength, cutID], function(error, results){
+	connection.query('UPDATE mydb.cuts SET name = ?, duration = ?, cost = ?, available = ?, hairLength = ? WHERE cutID = ?', [cutName, cutDuration, cutCost, cutAvailability, cutLength, cutID], function(error, results){ // update cuts table
 		if(error) console.log(error);
 		else response.redirect('http://localhost:3000/manageCuts');
 	});
@@ -334,10 +335,11 @@ app.post('/manageCut', function(request, response){
 
 // edit user info
 app.post('/manageUser', function(request, response){
+	// get post variables
 	let email = request.body.username;
 	let fName = request.body.fName;
 	let sName= request.body.sName;
-	if (typeof email != 'undefined'){
+	if (typeof email != 'undefined'){ // if email has been set
 		connection.query('UPDATE mydb.customers SET fName = ?, sName = ? WHERE email = ?', [fName, sName, email], function(error, results){
 			if(error) console.log(error);
 			else{
@@ -345,6 +347,9 @@ app.post('/manageUser', function(request, response){
 				response.redirect('http://localhost:3000/ManageUserAccount');
 			}
 		});
+	} else{
+		alert('User details not included');
+		response.redirect('http://localhost:3000/ManageUserAccount');
 	}
 
 });
