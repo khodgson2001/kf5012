@@ -4,7 +4,7 @@ TODO list for software
 - Finish booking page (H)
 	- PayPal
 
--Change image - manage cuts - K to update route, J to implement on F/E
+-Change image - manage cuts - K to update route
 
 - Nav bar as an overlay rather than separate page (L)
 
