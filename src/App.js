@@ -12,7 +12,6 @@ import Footer from './Footer.js';
 import ResetPassword from './ResetPassword.js';
 import ManageUserAccount from './ManageUserAccount.js';
 import ManageBookings from './ManageBookings.js';
-import Logout from './Logout';
 import ManageCuts from './ManageCuts.js';
 
 function App() {
@@ -33,7 +32,6 @@ function App() {
                         <Route path = '/ResetPassword' element = {<ResetPassword/>} />
                         <Route path = '/ManageUserAccount' element = {<ManageUserAccount/>} />
                         <Route path = '/ManageBookings' element = {<ManageBookings/>} />
-                        <Route path = '/Logout' element = {<Logout/>} />
                         <Route path = '/ManageCuts' element = {<ManageCuts/>} />
                     </Routes>
                 </div>
