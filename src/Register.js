@@ -24,7 +24,7 @@ function Register() {
                         <input type = "password" id = "pwrd" name = "pwrd" required maxLength = "44"></input>
                     </div>
                     <div className='loginFormButton'>
-                        <input type = "submit" value = "Log In"></input>
+                        <input type = "submit" value = "Register"></input>
                     </div>
                 </div>
             </form> 
