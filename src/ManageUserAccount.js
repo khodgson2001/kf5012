@@ -1,13 +1,18 @@
 import {useEffect, useState} from 'react';
+//IMporting the cookies
 import { useCookies } from "react-cookie";
+//Importing the Link, that links with the routes from the home page, from the router dom
 import { Link } from 'react-router-dom';
 
 function ManageUserAccount () {
 
+    //Getting cookies
     const [cookies, setCookie] = useCookies();
 
+    //const holding JSON dats for appointments
     const [appointments, getAppointments] = useState(null);
 
+    //Fetching JSON data upon first render
     useEffect(() => {
         fetch('http://localhost:9999/getAppointments')
             .then(res => {

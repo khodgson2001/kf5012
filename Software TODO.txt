@@ -12,8 +12,6 @@ TODO list for software
 
 - Make sure email isn't already in use on Registration (H) - Kieran
 
-- comment all code
-
 - Password Hash (M)
 
 - remove all console logs in front end

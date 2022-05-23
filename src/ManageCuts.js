@@ -4,8 +4,10 @@ import {useEffect, useState} from "react";
 
 function ManageCuts() {
 
+    //constant that holds the JSON data for the cuts
     const [cuts, setCuts] = useState(null);
 
+    //Fetching the JSON data for the cuts variable
     useEffect(() => {
         fetch('http://localhost:9999/cuts')
             .then(res => {
@@ -16,6 +18,8 @@ function ManageCuts() {
             });
     }, []);
 
+    /*Dipslays each type of cuts for the admin to see and then the edit form allows them to change what is displayed to the user on the home page
+    the .map function allows access to the elements within the JSON data*/
     return(
         <div className="manageCuts">
             <h2>Manage Cuts</h2>

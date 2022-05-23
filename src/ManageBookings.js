@@ -5,41 +5,11 @@ import {useEffect, useState} from 'react';
 
 function ManageBookings () {
 
-    const [barbers, setBarbers] = useState(null);
-
-    const [cuts, setCuts] = useState(null);
-
-    const [customer, setCustomer] = useState(null);
-
+    //Constant that holds the JSON data for the appointments
     const [appointments, getAppointments] = useState(null);
 
-    
+    //Use effect that assigns the JSON data from the API endpoint to the appointments useState variable
     useEffect(() => {
-        fetch('http://localhost:9999/staff')
-            .then(res => {
-               return res.json();
-            })
-            .then(data => {
-                setBarbers(data);
-                console.log(data);
-            });
-        fetch('http://localhost:9999/cuts')
-            .then(res => {
-               return res.json();
-             })
-            .then(data => {
-                setCuts(data);
-                console.log(data);
-
-            })
-        fetch('http://localhost:9999/getCustomers')
-            .then(res => {
-                return res.json();
-            })
-            .then(data => {
-                setCustomer(data);
-                console.log(data);
-            })
         fetch('http://localhost:9999/getAppointments')
             .then(res => {
                 return res.json();
@@ -51,6 +21,9 @@ function ManageBookings () {
     }, []);
 
 
+    /*Displays the JSON data for appointments in a neat way. Also the substring just removes the time from the appointment.date
+    Also the form to delete the bookings takes in the ID and deletes it based off that    
+    */
     return (
         <div className="manageBookings">
             <h2>Current Bookings</h2>

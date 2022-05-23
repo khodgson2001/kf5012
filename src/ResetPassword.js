@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Form to reset password using a route from express that communicates with the mySQL database
 function ResetPassword() {
     return(
         <div className = 'resetPassword'>

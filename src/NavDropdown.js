@@ -16,7 +16,7 @@ function NavDropdown() {
 
 
     
-
+    /*This function takes in the cookies and determines the user type, Admin or Customer. Then it assigns variables depdning on the outcome of the evaluation*/
     function evaluateUser() {
         if(cookies.loggedin == 'true')
         {
@@ -43,12 +43,14 @@ function NavDropdown() {
         }
     }
 
+    //Calls the function to evaluate the user upon initial render of the page 
     useEffect(() => {
         console.log(cookies);
         evaluateUser();
     }, []);
 
 
+    //Conditionally renders the page depending on who logs in using the logic operators
     return(
         <div className = 'navDropdown'>
             <Link to = '/kf5012'>Home</Link>

@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Form used with express and MySQL database to submit a new user to the database. Cannot be an admin, always a customer account created.
 function Register() {
     return(
         <div className = 'register'>
