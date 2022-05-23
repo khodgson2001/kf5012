@@ -61,6 +61,8 @@ function ManageUserAccount () {
                     <p>Time start: {appointment.time}</p>
                     <p>Time end: {appointment.time_end}</p>
                     <p>Barber: {appointment.fName} {appointment.sName}</p>
+                    <p>Cut type: {appointment.name}</p>
+                    <p>Paid: {appointment.paid}</p>
                     <p>Cost: £{appointment.cost}</p>
                 </div>
                 ))}
