@@ -30,5 +30,3 @@ TODO list for software
 - Full document explaining code (Read mission)
 
 - Testing + Test plan
-
-- booked - redirect and alert
