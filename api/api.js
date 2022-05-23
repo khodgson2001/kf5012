@@ -103,7 +103,7 @@ app.get('/logout', function(request, response){
 	response.redirect('http://localhost:3000/login');
 });
 
-// registration route - cannot handle duplicate emails right now
+// registration route
 app.post('/register', function(request, response){
 	// get post input
 	let email = request.body.emailReg;
@@ -115,7 +115,6 @@ app.post('/register', function(request, response){
 	   if (inConn === 0 && error === null){ // if not in a connection (0)
 		   alert('Error registering. Please try again'); // client facing error
 		   response.redirect('http://localhost:3000/register'); // redirect to registration form
-		   response.end();
 	   }
 	   if(error && inConn === 1) connection.rollback(function(){ //rollback the transaction if failed
 		   throw error; //throw error
@@ -136,7 +135,6 @@ app.post('/register', function(request, response){
 						reg_failed(error, 1); // ruun reg_failed function
 						connection.commit(function(error){ // commit the transaction
 							reg_failed(error, 1); // run reg_failed function
-							connection.end(); // close DB connection
 							alert('Account registered. Please login'); // client facing success msg
 							response.redirect('http://localhost:3000/login'); // redirect to login form
 						});
@@ -186,7 +184,6 @@ app.post('/book', function(request,response){
 			console.log(error)
 			alert('Error booking. Please try again'); // client facing error
 			response.redirect('http://localhost:3000/booking'); // redirect to registration form
-			response.end();
 		}
 		if(error && inConn === 1) connection.rollback(function(){ //rollback the transaction if failed
 			throw error; //throw error
@@ -329,8 +326,9 @@ app.post('/manageCut', function(request, response){
 	let cutLength = request.body.cutLength;
 	let cutCost = request.body.cutCost;
 	let cutAvailability = request.body.cutAvailable;
+	let cutImg = request.body.cutImg;
 
-	connection.query('UPDATE mydb.cuts SET name = ?, duration = ?, cost = ?, available = ?, hairLength = ? WHERE cutID = ?', [cutName, cutDuration, cutCost, cutAvailability, cutLength, cutID], function(error, results){ // update cuts table
+	connection.query('UPDATE mydb.cuts SET name = ?, duration = ?, cost = ?, img = ?, available = ?, hairLength = ? WHERE cutID = ?', [cutName, cutDuration, cutCost, cutImg, cutAvailability, cutLength, cutID], function(error, results){ // update cuts table
 		if(error) console.log(error);
 		else response.redirect('http://localhost:3000/manageCuts');
 	});
