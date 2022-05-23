@@ -50,7 +50,7 @@ function ManageCuts() {
                         <input type = "text" name = "cutName" id = "cutName" maxLength = "44" required></input>
                     </div>
                     <div className="editCutFormInner">
-                        <label htmlFor = "cutImg">image of cut: </label>
+                        <label htmlFor = "cutImg">Image of cut: </label>
                         <input type = "text" name = "cutImg" id = "cutImg" maxLength = "150" required></input>
                     </div>
                     <div className="editCutFormInner">
