@@ -103,74 +103,49 @@ app.get('/logout', function(request, response){
 	response.redirect('http://localhost:3000/login');
 });
 
-// registration route
+// registration route - cannot handle duplicate emails right now
 app.post('/register', function(request, response){
-	// load in details from request
 	let email = request.body.emailReg;
 	let password = request.body.pwrdReg;
 	let fName = request.body.fName;
 	let lName = request.body.lName;
 
-	// error function
-	function reg_failed(error, inConn){ 
-		if (inConn === 0 && error === null){ // if not in a connection (0)
-			alert('Error registering. Please try again'); // client facing error
-			response.redirect('http://localhost:3000/Login'); // redirect to registration form
-			response.end(); // end response
-		}
-		if(inConn === 1) 
-			connection.rollback(function(){ //rollback the transaction if failed
-			console.log(error); //throw error
-			alert('Error registering. Please try again'); // client facing error
-			response.redirect('http://localhost:3000/Login'); // redirect to registration form
-			response.end(); // end response
-			
-		});
-	}
-
-	if (email && password && fName && lName){ // if these are all set
-		var breaker = false;
-
-		connection.beginTransaction(function(error){ // starts a transaction - need to do several queries, one uses the previous' insert ID as a ForeignKey in DB
-			
-			if (error) {throw error;} //throw any errors
-			console.log()
-
-			connection.query('SELECT username FROM mydb.users WHERE username = ?', [email], function(error, results){ // select any users where the email passes
-				console.log(results);
-				if (!(results && results[0] == '[]')){ // if there are no results
-					breaker = true; // set breaker variable to true
-				} else {
-					breaker = false; // else set it to false
-					}
-			});
-			if (breaker == true) {connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [email, fName, lName], function(error, results){ // insert into cust table, escape strings for xtr validate
-				reg_failed(error, 1); // run reg_failed function
-				
-				let custID = results.insertId; // set custID var as the previous insertID, used in next query
-				
-				connection.query(`INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, ?);`, [email, password, custID], function(error){  // insert into user table, escape strings for xtr validate
-					reg_failed(error, 1); // run reg_failed function
-
-					connection.commit(function(error){ // commit the transaction
-						reg_failed(error, 1); // run reg_failed function
-						connection.end(); // close DB connection
-						console.log(email + ' registered'); // log registration in console
-						alert('Account registered. Please login'); // client facing success msg
-						response.redirect('http://localhost:3000/login'); // redirect to login form
-
-					});
-				});
-			});
-		} else{
-			reg_failed(error, 1);
-		}
-		});
-
-	} else {
-		reg_failed(null, 0);
-
-	}
+   function reg_failed(error, inConn){ 
+	   if (inConn === 0 && error === null){ // if not in a connection (0)
+		   alert('Error registering. Please try again'); // client facing error
+		   response.redirect('http://localhost:3000/register'); // redirect to registration form
+		   response.end();
+	   }
+	   if(error && inConn === 1) connection.rollback(function(){ //rollback the transaction if failed
+		   throw error; //throw error
+	   });
+   }
+   if (email && password && fName && lName){
+	   connection.beginTransaction(function(error){ // starts a transaction - need to do several queries, one uses the previous' insert ID as a ForeignKey in DB
+		   
+		   if (error) {throw error;} //throw any errors
+		   
+		   connection.query(`INSERT INTO customers(email, fName, sName) VALUES (?, ?, ?)`, [email, fName, lName], function(error, results){ // insert into cust table, escape strings for xtr validate
+			   reg_failed(error, 1); // run reg_failed function
+			   
+			   let custID = results.insertId; // set custID var as the previous insertID, used in next query
+			   
+			   connection.query(`INSERT INTO users(username, password, customer_customerID) VALUES (?, ?, ?);`, [email, password, custID], function(error){  // insert into user table, escape strings for xtr validate
+				   reg_failed(error, 1); // ruun reg_failed function
+				   connection.commit(function(error){ // commit the transaction
+					   reg_failed(error, 1); // run reg_failed function
+					   connection.end(); // close DB connection
+					   console.log(email + ' registered'); // log registration in console
+					   alert('Account registered. Please login'); // client facing success msg
+					   response.redirect('http://localhost:3000/login'); // redirect to login form
+				   });
+			   });
+		   });
+	   });
+   } else {
+	   
+	   reg_failed(null, 0);
+   }
 });
 
 // Returns all available cuts in JSON format
