@@ -7,12 +7,16 @@ import { useCookies } from "react-cookie";
 
 function Booking() {
 
+    /*constant that holds the cookies that stores the information about the current user e.g. username etc*/
     const [cookies, setCookie] = useCookies();
 
+    /*constant that holds the JSON data that is fetched in the use effect */
     const [barbers, setBarbers] = useState(null);
 
+    /*constant that holds the JSON data that is fetched in the use effect  */
     const [cuts, setCuts] = useState(null);
     
+    /*Use effect runs when the page is rendered. The empty array specifies that the useEffect dependencies. As it is empty it only runs on the initial load of the page */
     useEffect(() => {
         fetch('http://localhost:9999/staff')
             .then(res => {
@@ -33,6 +37,10 @@ function Booking() {
     }, []);
     
 
+    /*Here, a form is generated to the user to be able to create a booking. It communitcates with the /book route with express to input to the mySQL database. 
+    The .map function takes in the JSON data stored in barbers variable and loops through it. In the JSX, the barber. notation allows access to elements within the JSON data.
+    This is the same for the cuts.
+    */
     return (
         <div className='booking'>
             <div className='bookingForm'>

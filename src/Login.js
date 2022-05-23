@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 
 
 function Login() {
+    /*Login form using POST method to communicate with express and mySQL database route.
+    Also a register form on the same page that does the same thing. They submit separately as they are separate forms.*/ 
     return(    
         <><div className='login'>
             <form action="http://localhost:9999/auth" method="POST">

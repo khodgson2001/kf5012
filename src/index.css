@@ -1,14 +1,15 @@
-/* Media query inserted here for screen sozie - mobile only*/
-
+/*Media query that applies the CSS to the screen width for mobile devices*/
 @media screen and (max-width: 415px)
 {
 
+/*This applies css to the entire site*/
 * {
     margin: 0;
     padding: 0;
     color: black;
 }
 
+/*Section of CSS that applies to the navbar*/
 .navbar {
     border: solid black;
     display: flex;
@@ -25,6 +26,8 @@
     transition: 0.45s;
 }
 
+/*When the user hovers over the navbar hamburger icon it turns red, however due to it being a mobile first site it only 
+turns red when they click it*/
 .navbar a:hover {
     color: red;
 }
@@ -34,6 +37,7 @@
     text-align: center;
 }
 
+/*CSS for NavDropdown*/
 .navDropdown a {
     text-decoration: none;
     text-align: center;
@@ -50,6 +54,7 @@
     padding: 10%;
 }
 
+/*CSS for booking section*/
 .booking {
     margin: 2%;
     border: solid black;
@@ -68,6 +73,7 @@
     font-weight: bold;
 }
 
+/*CSS applied to the submit button within the booking page*/
 .booking .bookingInnerSubmit{
     display: flex;
     justify-content: space-evenly;
@@ -87,12 +93,14 @@
 }
 
 
+/*CSS applied to the login section of the site*/
 .login {
     margin: 2%;
     padding: 2%;
 
 }
 
+/*CSS appleid to the register seciton of the site */
 .register {
     margin: 2%;
     padding: 2%;
@@ -102,6 +110,7 @@
     margin: 1%;
 }
 
+/*Gradient that is applied throughout site*/
 .loginForm {
     background: linear-gradient(45deg, #8E8E8E, #4D4D4D);
     border: solid black;
@@ -116,6 +125,7 @@
     justify-content: space-between;
 }
 
+/*CSS that is applied to both the input tags and the button in the login form*/
 .loginForm input, button {
     appearance: none;
     background: none;
@@ -178,6 +188,7 @@
     background: linear-gradient(45deg, #B6B6B6, #4D4D4D);
 }
 
+/*CSS applied to the home page*/
 .home {
     margin: 1%;
     padding: 1%;
@@ -204,6 +215,7 @@
     border: thin solid black;
 }
 
+/*CSS applied to the unavailble cuts*/
 .home .outerShell .notAvailable{
     text-align: center;
 }
@@ -223,11 +235,13 @@
     margin-left: 5%;
 }
 
+/*CSS applied to the manage bookings page*/
 .manageBookings {
     margin: 1%;
     padding: 1%;
 }
 
+/*Gradient again*/
 .manageBookings .appointments {
     border: thin solid black;
     margin: 2%;
@@ -238,6 +252,7 @@
     margin: 1%;
 }
 
+/*CSS applied to the form that deletes bookings when logged in as an admin*/
 .manageBookings .deleteBookingForm {
     border: thin solid black;
     margin: 2%;
@@ -264,6 +279,7 @@
     font-weight: bold;
 }
 
+/*CSS applied to the manage cuts screen*/
 .manageCuts{
     margin: 1%;
     padding: 1%;
@@ -319,6 +335,7 @@
     font-weight: bold;
 }
 
+/*CSS applied to the manage user account screen when logged in as a user*/
 .manageUserAccount{ 
     margin: 1%;
     padding: 1%;
@@ -354,12 +371,13 @@
     font-weight: bold;
 }
 
+/*Aligns text in the centre where the classname of the tag is textAlign*/
 .textAlign {
     text-align: center;
 }
 
 
-
+/*CSS applied to the footer*/
 footer {
     font-size: 12px;
     margin: 5%;

@@ -4,6 +4,7 @@ import {useState} from 'react';
 
 function Home() {
 
+    /*constant that holds the cookies that stores the information about the cuts e.g. cut ID etc*/
     const [cuts, setCuts] = useState(null);
 
     useEffect(() => {
@@ -17,8 +18,12 @@ function Home() {
     }, []);
 
 
-    //Funcitonality works but gives an error in the console
-    function availabilityCheck(availablity, pos) {
+    /*Use effect runs when the page is rendered. The empty array specifies that the useEffect dependencies. As it is empty it only runs on the initial load of the page.
+    availablity check is a function that takes in the cut information and checks if the cut is available. 
+    Then, it outputs different JSX depending on if it is available or not to be returned to the application render.
+    
+    */
+    function availabilityCheck(availablity) {
         if(availablity.available == 1)
             {
                 return (
