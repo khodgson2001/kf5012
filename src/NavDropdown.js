@@ -45,7 +45,6 @@ function NavDropdown() {
 
     //Calls the function to evaluate the user upon initial render of the page 
     useEffect(() => {
-        console.log(cookies);
         evaluateUser();
     }, []);
 

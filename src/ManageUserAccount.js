@@ -29,7 +29,6 @@ function ManageUserAccount () {
             })
             .then(data => {
                 getAppointments(data);
-                console.log(data);
             })
     }, []);
 

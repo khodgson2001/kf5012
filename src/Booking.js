@@ -24,7 +24,6 @@ function Booking() {
             })
             .then(data => {
                 setBarbers(data);
-                console.log(data);
             });
         fetch('http://localhost:9999/cuts')
             .then(res => {
@@ -32,7 +31,6 @@ function Booking() {
              })
             .then(data => {
                 setCuts(data);
-                console.log(data);
             })
     }, []);
     

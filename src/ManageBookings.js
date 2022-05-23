@@ -16,7 +16,6 @@ function ManageBookings () {
             })
             .then(data => {
                 getAppointments(data);
-                console.log(data);
             })
     }, []);
 
