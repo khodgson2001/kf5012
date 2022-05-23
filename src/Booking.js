@@ -40,7 +40,7 @@ function Booking() {
                     <div className='bookingInner'>
                     <input name = "customerID" type = "hidden" id = "customerID" value = {cookies.username}></input>
                     <label htmlFor = "barbers">Select a barber: </label>
-                        <select name = "barbers" id = "barbers">
+                        <select name = "barbers" id = "barbers" required>
                             {barbers && barbers.map((barber) => (
                                 <option value = {barber.staffID} key = {barber.staffID}>{barber.fName} {barber.sName}</option>
                             ))}
@@ -48,15 +48,15 @@ function Booking() {
                     </div>
                     <div className='bookingInner'>
                     <label htmlFor = "dates">Select a date: </label>
-                        <input name = "date" type = "date" id="date"></input>
+                        <input name = "date" type = "date" id="date" required></input>
                     </div>
                     <div className='bookingInner'>
                     <label htmlFor = "times">Select a time: </label>
-                        <input name = "time" type = "time" id="time"></input>
+                        <input name = "time" type = "time" id="time" required></input>
                     </div>
                     <div className='bookingInner'>
                     <label htmlFor = "cuts">Select a cut: </label>
-                        <select name = "hairCuts" id = "hairCuts">
+                        <select name = "hairCuts" id = "hairCuts" required>
                             {cuts && cuts.map((cut) => (
                                 <option value = {cut.cutID} key = {cut.cutID} disabled = {(cut.available == 0) ? true : false}>{cut.name} - £{cut.cost}</option>
                             ))}

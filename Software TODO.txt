@@ -18,12 +18,6 @@ TODO list for software
 
 - remove all console logs in front end
 
-- Validation on all input forms (M)
-	- required where necessary
-	-  max length
-	- data type
-	- etc
-
 - Management Tasks
 	
 	•	The original Website Proposal (due week 4) DONE

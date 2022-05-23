@@ -39,27 +39,27 @@ function ManageCuts() {
                 <form action = "http://localhost:9999/manageCut" method = "POST">
                     <div className="editCutFormInner">
                         <label htmlFor = "cutID">ID of cut: </label>
-                        <input type = "text" name = "cutID" id = "cutID"></input>
+                        <input type = "number" name = "cutID" id = "cutID" required></input>
                     </div>
                     <div className="editCutFormInner">
                         <label htmlFor = "cutName">Name of cut: </label>
-                        <input type = "text" name = "cutName" id = "cutName"></input>
+                        <input type = "text" name = "cutName" id = "cutName" maxLength = "44" required></input>
                     </div>
                     <div className="editCutFormInner">
                         <label htmlFor = "cutLength">Length of cut: </label>
-                        <input type = "text" name = "cutLength" id = "cutLength" maxLength = "40"></input>
+                        <input type = "text" name = "cutLength" id = "cutLength" maxLength = "44" required></input>
                     </div>
                     <div className="editCutFormInner">
                         <label htmlFor = "cutDuration">Duration of cut: </label>
-                        <input type = "number" name = "cutDuration" id = "cutDuration" step='15' max = '120'></input>
+                        <input type = "number" name = "cutDuration" id = "cutDuration" step='15' max = '120' required></input>
                     </div>
                     <div className="editCutFormInner">
                         <label htmlFor = "cutCost">Cost of cut: </label>
-                        <input type = "number" name = "cutCost" id = "cutCost" max = '30'></input>
+                        <input type = "number" name = "cutCost" id = "cutCost" max = '30' required></input>
                     </div>
                     <div className="editCutFormInner">
                         <label htmlFor = "cutAvailable">Availability of cut: </label>
-                        <input type = "number" name = "cutAvailable" id = "cutAvailable" min = '0' max = '1'></input>
+                        <input type = "number" name = "cutAvailable" id = "cutAvailable" min = '0' max = '1' required></input>
                     </div>
                     <div className="editCutFormInner">
                         <input type = "submit" value = "Submit" id = "submit"></input>

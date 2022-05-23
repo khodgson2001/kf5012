@@ -69,7 +69,7 @@ function ManageBookings () {
                 <form action = "http://localhost:9999/deleteBooking" method = "POST">
                         <div className="innerDeleteForm">
                         <label htmlFor = "bookingID">Booking ID to be deleted: </label>
-                        <input type = "text" name = "bookingID" id = "bookingID"></input>
+                        <input type = "number" name = "bookingID" id = "bookingID" required></input>
                         <input type = "submit" id = "submit" value = "Delete"></input>
                     </div>
                 </form>
