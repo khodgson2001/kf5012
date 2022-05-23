@@ -32,11 +32,11 @@ function ManageUserAccount () {
                     </div>
                     <div className = "manageAccountFormInner">
                         <label htmlFor = "sName">Your first name: </label>
-                        <input name = "fName" id = "fName" type = "text"></input>
+                        <input name = "fName" id = "fName" type = "text" required maxLength="44"></input>
                     </div>
                     <div className = "manageAccountFormInner">
                         <label htmlFor = "sName">Your last name: </label>
-                        <input name = "sName" id = "sName" type = "text"></input> 
+                        <input name = "sName" id = "sName" type = "text" required maxLength="44"></input> 
                     </div>
                     <div className = "manageAccountFormInner">
                         <input value = "Submit" type = "submit" id = "submit"></input> 
