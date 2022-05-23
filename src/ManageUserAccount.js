@@ -45,7 +45,7 @@ function ManageUserAccount () {
                 <div className='loginReset'>
                         <Link to='/ResetPassword'>Reset Password</Link>
                 </div>
-                <p>To cancel your booking, contact Jon Doe: JonDoe26@email.com</p>
+                <p className='textAlign'>To cancel your booking, contact Jon Doe: JonDoe26@email.com</p>
             </div>
         </div>
     );
