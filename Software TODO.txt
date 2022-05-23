@@ -6,7 +6,7 @@ TODO list for software
 
 - Nav bar as an overlay rather than separate page (L)
 
-- See current bookings on Manage Account
+- See current bookings on Manage Account - K set up route
 
 - Make sure email isn't already in use on Registration (H) - Kieran
 
