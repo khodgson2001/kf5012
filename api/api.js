@@ -136,7 +136,7 @@ app.post('/register', function(request, response){
 						connection.commit(function(error){ // commit the transaction
 							reg_failed(error, 1); // run reg_failed function
 							alert('Account registered. Please login'); // client facing success msg
-							response.redirect('http://localhost:3000/login'); // redirect to login form
+							response.redirect('http://localhost:3000/Login'); // redirect to login form
 						});
 					});
 				});
